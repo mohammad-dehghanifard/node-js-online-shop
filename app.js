@@ -2,12 +2,13 @@ const express = require("express");
 const path = require("path");
 const bodyParser = require("body-parser");
 const adminRouter = require("./routes/admin");
-const shopRouter = require("./routes/shop")
+const shopRouter = require("./routes/shop");
 
 const port = 3030;
 const app = express();
 
 app.set("views,views");
+app.set("view engine","ejs")
 
 // static مشخص کردن مسیر فایل های 
 app.use(express.static(path.join(__dirname,"public")))
