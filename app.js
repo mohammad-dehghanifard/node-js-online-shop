@@ -1,10 +1,9 @@
 const express = require("express");
 const path = require("path");
 const bodyParser = require("body-parser");
-const mingoos = require('mongoose');
+const mongoose = require('mongoose');
 const adminRouter = require("./routes/admin");
 const shopRouter = require("./routes/shop");
-const { default: mongoose } = require("mongoose");
 
 const port = 3030;
 const app = express();
