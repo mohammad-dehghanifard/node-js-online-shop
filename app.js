@@ -1,8 +1,10 @@
 const express = require("express");
 const path = require("path");
 const bodyParser = require("body-parser");
+const mingoos = require('mongoose');
 const adminRouter = require("./routes/admin");
 const shopRouter = require("./routes/shop");
+const { default: mongoose } = require("mongoose");
 
 const port = 3030;
 const app = express();
@@ -19,6 +21,10 @@ app.use("/admin",adminRouter);
 app.use(shopRouter)
 
 
-app.listen(port,()=>{
-    console.log("Listeninig on port :",port)
+mongoose.connect("mongodb://localhost:27017/Shop")
+.then(result => {
+    app.listen(port,()=>{
+        console.log("connecte to database and listen on port :",port)
+    })
 })
+.catch(err => {console.error(err)});
