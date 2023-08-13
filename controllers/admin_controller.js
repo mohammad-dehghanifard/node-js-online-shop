@@ -2,7 +2,10 @@ const Product = require("../models/product")
 
 
 function getAddProducte(req,res){
-    res.render("admin/add-product")
+    res.render("admin/add-product",{
+        path : "admin/add-product",
+        pageTitle : "افزودن محصول جدید"
+    })
 }
 
 function addPostProduct(req,res){
