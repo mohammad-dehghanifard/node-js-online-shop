@@ -20,10 +20,10 @@ app.use("/admin",adminRouter);
 app.use(shopRouter)
 
 
-mongoose.connect("mongodb://localhost:27017/Shop")
+mongoose.connect("mongodb://0.0.0.0:27017/shop")
 .then(result => {
     app.listen(port,()=>{
         console.log("connecte to database and listen on port :",port)
     })
 })
-.catch(err => {console.error(err)});
+.catch(err => {console.error(err.message)});
