@@ -10,7 +10,7 @@ function addPostProduct(req,res){
     const title = req.body.title;
     const content = req.body.content;
     const price = req.body.price;
-    const imageUrl = req.body.imageUrl;
+    const imageUrl = req.body.imageurl;
 
     const product = new Product({
         title : title,
