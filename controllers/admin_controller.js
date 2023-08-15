@@ -29,4 +29,17 @@ function addPostProduct(req,res){
 
 }
 
-module.exports = {getAddProducte,addPostProduct};
+function getAllProducts(req,res){
+    Product.find().
+    then(products => {
+        res.render("admin/products",{
+            path : "/products",
+            pageTitle : "محصولات ادمین",
+            productList : products,
+        })
+    }).catch(
+        error => {console.log(error)}
+    )
+}
+
+module.exports = {getAddProducte,addPostProduct,getAllProducts};

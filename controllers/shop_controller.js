@@ -17,7 +17,7 @@ exports.getProductById = (req,res) => {
             res.render(
                 "shop/product_details",
                 {
-                    path : "/product",
+                    path : "/allproduct",
                     pageTitle : "مشاهده محصول",
                     product : product,
                 }

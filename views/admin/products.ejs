@@ -1,0 +1,37 @@
+
+<%- include("../inc/heading.ejs") %>
+<%- include("../inc/shop_head.ejs") %>
+<%- include("../inc/navbar.ejs") %>
+
+    <main>
+      <% if(productList.length > 0) { %>
+
+      <div class="grid">
+        <% for( let product of productList ) { %>
+        
+        <article class="card product-item">
+          <header class="card__header">
+            <h1 class="product__title"> <%= product.title %> </h1>
+          </header>
+          <div class="card__image">
+            <img src= <%= product.imageurl %> alt="Product Title" />
+          </div>
+          <div class="card__content">
+            <h2 class="product__price"> <%= product.price %> </h2>
+            <p class="product__description"> <%= product.content %> </p>
+          </div>
+          <div class="card__actions">
+            <a href="/product/<%= product._id %>" class="btn btn-primary">جزئیات</a>
+          </div>
+        </article>
+
+        <% } %>
+
+      </div>
+      <% } else{ %>
+        <h1>هیچ محصولی یافت نشد</h1>
+        <% } %>
+    </main>
+
+<%- include("../inc/fotter.ejs") %>
+
