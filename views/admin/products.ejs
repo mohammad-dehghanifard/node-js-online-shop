@@ -21,7 +21,8 @@
             <p class="product__description"> <%= product.content %> </p>
           </div>
           <div class="card__actions">
-            <a href="/product/<%= product._id %>" class="btn btn-primary">جزئیات</a>
+            <a href="edit-product/<%= product._id %>?edit=true" class="btn btn-warning">ویرایش</a>
+            <a href="" class="btn btn-danger">حذف</a>
           </div>
         </article>
 
@@ -34,4 +35,3 @@
     </main>
 
 <%- include("../inc/fotter.ejs") %>
-

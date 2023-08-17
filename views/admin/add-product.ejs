@@ -4,7 +4,7 @@
 
 <main>
     <div class="container">
-      <form action="/admin/add-product" method="post">
+      <form action="/admin/<% if (editing) { %>edit-product<% } else { %>add-product<% } %>" method="post">
         <div class="form-group">
           <label for="title">عنوان</label>
           <input
@@ -13,6 +13,7 @@
             id="title"
             name="title"
             placeholder="نام محصول را وارد کنید"
+            value="<% if(editing){ %> <%= product.title%><% } %>"
           />
         </div>
         <div class="form-group">
@@ -23,6 +24,7 @@
             id="price"
             name="price"
             placeholder="قیمت محصول را وارد کنید"
+            value="<%if(editing){%><%= product.price%><%}%>"
           />
         </div>
         <div class="form-group">
@@ -33,6 +35,7 @@
             id="imageUrl"
             name="imageurl"
             placeholder="عکس محصول را وارد کنید"
+            value="<% if(editing){ %> <%= product.imageurl%><% } %>"
           />
         </div>
         <div class="form-group">
@@ -42,9 +45,10 @@
             name="content"
             cols="30"
             rows="10"
-          ></textarea>
+          ><% if(editing){%><%= product.content %><% } %>
+        </textarea>
         </div>
-        <button type="submit" class="btn btn-primary">ثبت</button>
+        <button type="submit" class="btn btn-primary"><% if(editing){ %>ویرایش محصول<% }else{ %>ثبت<% } %>  </button>
       </form>
     </div>
   </main>

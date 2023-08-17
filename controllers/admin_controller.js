@@ -4,7 +4,8 @@ const Product = require("../models/product")
 function getAddProducte(req,res){
     res.render("admin/add-product",{
         path : "admin/add-product",
-        pageTitle : "افزودن محصول جدید"
+        pageTitle : "افزودن محصول جدید",
+        editing : false,
     })
 }
 
@@ -42,4 +43,34 @@ function getAllProducts(req,res){
     )
 }
 
-module.exports = {getAddProducte,addPostProduct,getAllProducts};
+function getEditProduct(req,res){
+ const editMode = req.query.edit;
+
+ if(!editMode){
+    res.redirect("/");
+ }
+
+ const productId = req.params.productId;
+
+ Product.findById(productId).then(
+    product => {
+
+        if(!product){
+            res.redirect("/");
+        }
+
+        res.render(
+            'admin/add-product',
+            {
+                path : "admin/edit-product",
+                pageTitle : "ویرایش مخصول جدید",
+                editing : editMode,
+                product : product
+            }
+            )
+    }
+ )
+ 
+}
+
+module.exports = {getAddProducte,addPostProduct,getAllProducts,getEditProduct};
