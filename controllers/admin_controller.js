@@ -73,4 +73,25 @@ function getEditProduct(req,res){
  
 }
 
-module.exports = {getAddProducte,addPostProduct,getAllProducts,getEditProduct};
+function postEditProduct(req,res) {
+    const productId = req.body.productID;
+
+    const updatedTitle = req.body.title;
+    const updatedPrice = req.body.price;
+    const updatedImageUrl = req.body.imageurl;
+    const updatedContent = req.body.content;
+
+    Product.findById(productId).then(product => {
+        product.title = updatedTitle;
+        product.price = updatedPrice;
+        product.imageurl = updatedImageUrl;
+        product.content = updatedContent;
+        return product.save();
+    })
+    .then(result => {
+        res.redirect("/");
+    });
+}
+
+
+module.exports = {getAddProducte,addPostProduct,getAllProducts,getEditProduct,postEditProduct};

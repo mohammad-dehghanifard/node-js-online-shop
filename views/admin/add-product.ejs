@@ -48,6 +48,11 @@
           ><% if(editing){%><%= product.content %><% } %>
         </textarea>
         </div>
+
+        <% if(editing){ %>
+        <input type="hidden" value="<%= product._id %>" name="productID">
+          <% } %>
+          
         <button type="submit" class="btn btn-primary"><% if(editing){ %>ویرایش محصول<% }else{ %>ثبت<% } %>  </button>
       </form>
     </div>
