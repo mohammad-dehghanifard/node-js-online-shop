@@ -93,5 +93,22 @@ function postEditProduct(req,res) {
     });
 }
 
+function deleteProduct(req,res){
+    const productID = req.body.productId;
 
-module.exports = {getAddProducte,addPostProduct,getAllProducts,getEditProduct,postEditProduct};
+    Product.findByIdAndRemove(productID)
+    .then(()=>{
+        console.log("Product Deleted....");
+        res.redirect("/admin/products")
+    })
+    .catch(error => {console.error(error.message)})
+}
+
+module.exports = {
+    getAddProducte,
+    addPostProduct,
+    getAllProducts,
+    getEditProduct,
+    postEditProduct,
+    deleteProduct,
+};

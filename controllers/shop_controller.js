@@ -34,7 +34,7 @@ exports.getAllProductList = (req,res) => {
             res.render(
                 "shop/allproducts",
                 {
-                    path : "/products",
+                    path : "/allproducts",
                     pageTitle : "مشاهده همه محصولات",
                     productList : products
                 }
