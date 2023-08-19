@@ -1,5 +1,6 @@
 const Product = require("../models/product");
 
+// نمایش محصولات داخل صفحه اصلی
 exports.getAllProduct = (req,res) => {
     const data = Product.find().then(products => {
         res.render("shop/index",{
@@ -17,9 +18,25 @@ exports.getProductById = (req,res) => {
             res.render(
                 "shop/product_details",
                 {
-                    path : "/allproduct",
+                    path : "/alldetail",
                     pageTitle : "مشاهده محصول",
                     product : product,
+                }
+                )
+        }
+    )
+}
+
+// نمایش تمام محصولات داخل صفحه مربوط به محصولات
+exports.getAllProductList = (req,res) => {
+    Product.find().then(
+        products => {
+            res.render(
+                "shop/allproducts",
+                {
+                    path : "/products",
+                    pageTitle : "مشاهده همه محصولات",
+                    productList : products
                 }
                 )
         }

@@ -6,4 +6,6 @@ router.get("/",shopController.getAllProduct)
 
 router.get("/product/:productId",shopController.getProductById);
 
+router.get("/allproducts",shopController.getAllProductList)
+
 module.exports = router
