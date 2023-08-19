@@ -8,6 +8,11 @@ const productSchema = new Schema(
     content : {type : String,required : true},
     imageurl : {type : String,required : true},
     price : {type : Number,required : true},
+    userId : {
+        type : Schema.Types.ObjectId,
+        ref : "User",
+        required :true,
+    }
 }
 );
 
