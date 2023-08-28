@@ -4,7 +4,7 @@ const bodyParser = require("body-parser");
 const mongoose = require('mongoose');
 const adminRouter = require("./routes/admin");
 const shopRouter = require("./routes/shop");
-const userModel = require("./models/user")
+const User = require("./models/user")
 
 const port = 3030;
 const app = express();
@@ -26,18 +26,20 @@ mongoose.connect("mongodb://0.0.0.0:27017/shop")
     app.listen(port,()=>{
         
         // در صورتی که یوزی وجود نداشته باشه یه یوزر درست میکنه
-        
-        userModel.findOne().then(
+        User.findOne().then(
             user => {
-                const shopUser = new userModel(
-                    {
-                        name : "mohammad dehghanifard",
-                        email: "mohammad@gmail.com",
-                        cart : {
-                            items : []
+                if(!user){
+                    const shopUser = new User(
+                        {
+                            name : "mohammad dehghanifard",
+                            email: "mohammad@gmail.com",
+                            cart : {
+                                items : []
+                            }
                         }
-                    }
-                )
+                    );
+                    shopUser.save();
+                }
             }
         )
 
