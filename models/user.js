@@ -36,7 +36,7 @@ const userSchema = new Schema(
     }
 )
 
-userSchema.methods.addToCart = (product) => {
+userSchema.methods.addToCart = function (product) {
     // در صورتی که محصول داخل سبد خرید کاربر وجود داشته باشه، محصول رو استخراج و داخل متغیر نگهداری میکنه
     const productIndex = this.cart.items.findIndex(
         cartProducts => {
