@@ -42,3 +42,14 @@ exports.getAllProductList = (req,res) => {
         }
     )
 }
+
+// اضافه کردن ایتم یا اپدیت کردن سبد خرید
+exports.addOrUpadateCart = (req,res) =>{
+    const id = req.body.ProductId;
+
+    Product.findById(id).then(product => {
+        req.user.addToCart(product);
+
+        res.redirect("/");
+    })
+}
