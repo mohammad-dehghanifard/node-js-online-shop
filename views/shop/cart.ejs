@@ -8,23 +8,34 @@
   <main>
 
     <ul class="cart__item-list">
-      <% productList.forEach(product => { %>
 
+      <% productList.forEach(product => { %>
         <li class="cart__item">
         <div>
           <img src="<%=product.productId.imageurl%>" class="img-thumbnail" alt="" />
         </div>
         <h1><%=product.productId.title%></h1>
-        <h2><%= product.productId.content%></h2>
+        <h2><%= product.quantity%></h2>
         <form action="/cart-remove-item" method="post">
           <button class="btn btn-danger" type="submit">حذف</button>
           <input name="productId" type="hidden" value="<%= product.productId._id %>">
         </form>
       </li>
     </ul>
-    
   <%  }); %>
-  
+
+
+  <div class="row">
+    <div class="container">
+      <div class="centered">
+        <form action="/">
+          <button type="submit" class="btn btn-success">پرداخت نهایی و سفارش محصولات</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+
   </main>
   <% } else{ %>
       <h3>سبد خرید شما خالی است...</h3>
