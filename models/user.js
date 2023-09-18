@@ -36,6 +36,7 @@ const userSchema = new Schema(
     }
 )
 
+// add or update product in cart
 userSchema.methods.addToCart = function (product) {
     // در صورتی که محصول داخل سبد خرید کاربر وجود داشته باشه، محصول رو استخراج و داخل متغیر نگهداری میکنه
     const productIndex = this.cart.items.findIndex(
@@ -71,6 +72,7 @@ userSchema.methods.addToCart = function (product) {
     return this.save();
 }
 
+// romeve product in cart
 userSchema.methods.reomveAtTheCart = function(productId){
     const updatedCartItems = this.cart.items.filter(
         item => {

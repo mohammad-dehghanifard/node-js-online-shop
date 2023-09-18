@@ -21,6 +21,7 @@ function addPostProduct(req,res){
         content : content,
         price : price,
         imageurl : imageUrl,
+        userId : req.user
     })
 
     product.save().then(result => {

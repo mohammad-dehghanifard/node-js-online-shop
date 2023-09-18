@@ -10,6 +10,8 @@ router.get("/allproducts",shopController.getAllProductList);
 
 router.post("/updateCart",shopController.addOrUpadateCart);
 
+router.post("/cart-remove-item",shopController.removeProductInCart);
+
 router.get("/cart",shopController.getallCartProducts);
 
 module.exports = router

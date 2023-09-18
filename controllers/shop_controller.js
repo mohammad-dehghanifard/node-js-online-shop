@@ -67,3 +67,9 @@ exports.getallCartProducts = async (req,res) => {
         }
     )
 }
+
+exports.removeProductInCart = (req,res) => {
+    const proId = req.body.productId;
+    req.user.reomveAtTheCart(proId);
+    res.redirect("/cart");
+}

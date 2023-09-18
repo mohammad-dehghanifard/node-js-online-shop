@@ -16,8 +16,9 @@
         </div>
         <h1><%=product.productId.title%></h1>
         <h2><%= product.productId.content%></h2>
-        <form action="">
-          <button class="btn btn-danger">حذف</button>
+        <form action="/cart-remove-item" method="post">
+          <button class="btn btn-danger" type="submit">حذف</button>
+          <input name="productId" type="hidden" value="<%= product.productId._id %>">
         </form>
       </li>
     </ul>
