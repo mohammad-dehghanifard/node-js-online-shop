@@ -1,4 +1,5 @@
 const Product = require("../models/product");
+const Order = require("../models/order")
 
 // نمایش محصولات داخل صفحه اصلی
 exports.getAllProduct = (req,res) => {
@@ -72,4 +73,25 @@ exports.removeProductInCart = (req,res) => {
     const proId = req.body.productId;
     req.user.reomveAtTheCart(proId);
     res.redirect("/cart");
+}
+
+exports.postOrder = (req,res) => {
+    req.user.populate("cart.items.productId").then(
+        user => {
+
+            const products = user.cart.items.map(i => {
+                return {product: i.ProductId, quantity: i.quantity}
+            });
+
+            const order = new Order( {
+                    user : {
+                        name : req.user,
+                        userId : req.user
+                    },
+                    products : products
+                },
+            );
+            return order.save();
+        }
+    )
 }
