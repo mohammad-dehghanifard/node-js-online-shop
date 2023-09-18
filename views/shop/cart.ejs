@@ -1,20 +1,32 @@
-<%- include('../includes/navbar.ejs') %>
 
-<main>
 
-  <ul class="cart__item-list">
-    <li class="cart__item">
-      <div>
-        <img src="<%= "" %>" class="img-thumbnail" alt="" />
-      </div>
-      <h1><%= 1 %></h1>
-      <h2><%= 2 %></h2>
-      <form action="">
-        <button class="btn btn-danger">حذف</button>
-      </form>
-    </li>
-  </ul>
+<%- include("../inc/heading.ejs") %>
+<%- include("../inc/shop_head.ejs") %>
+<%- include("../inc/navbar.ejs") %>
 
-</main>
+<% if(productList.length > 0){ %>
+  <main>
 
-<%- include('../includes/fotter.ejs') %>
+    <ul class="cart__item-list">
+      <% productList.forEach(product => { %>
+
+        <li class="cart__item">
+        <div>
+          <img src="<%=product.productId.imageurl%>" class="img-thumbnail" alt="" />
+        </div>
+        <h1><%=product.productId.title%></h1>
+        <h2><%= product.productId.content%></h2>
+        <form action="">
+          <button class="btn btn-danger">حذف</button>
+        </form>
+      </li>
+    </ul>
+    
+  <%  }); %>
+  
+  </main>
+  <% } else{ %>
+      <h3>سبد خرید شما خالی است...</h3>
+    <% } %>
+
+<%- include("../inc/fotter.ejs") %>

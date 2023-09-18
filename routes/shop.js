@@ -6,8 +6,10 @@ router.get("/",shopController.getAllProduct)
 
 router.get("/product/:productId",shopController.getProductById);
 
-router.get("/allproducts",shopController.getAllProductList)
+router.get("/allproducts",shopController.getAllProductList);
 
-router.post("/cart",shopController.addOrUpadateCart)
+router.post("/updateCart",shopController.addOrUpadateCart);
+
+router.get("/cart",shopController.getallCartProducts);
 
 module.exports = router

@@ -56,14 +56,14 @@ exports.addOrUpadateCart = (req,res) =>{
 
 exports.getallCartProducts = async (req,res) => {
     // populate => به ایتم های زیر مجموعه دسترسی پیدا میکنیم
-    const productList = await req.use.populate('cart.items.productId');
+    const data = await req.user.populate('cart.items.productId');
 
     res.render(
         "shop/cart",
         {
             path : "/cart",
             pageTitle : "سبد خرید",
-            productList : productList.cart.items
+            productList : data.cart.items
         }
     )
 }
