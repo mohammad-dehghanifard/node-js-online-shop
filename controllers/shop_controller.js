@@ -55,6 +55,7 @@ exports.addOrUpadateCart = (req,res) =>{
     })
 }
 
+// دریافت تمام محصولات داخل سبد خرید کاربر
 exports.getallCartProducts = async (req,res) => {
     // populate => به ایتم های زیر مجموعه دسترسی پیدا میکنیم
     const data = await req.user.populate('cart.items.productId');
@@ -69,28 +70,31 @@ exports.getallCartProducts = async (req,res) => {
     )
 }
 
+// حذف محصول از سبد خرید
 exports.removeProductInCart = (req,res) => {
     const proId = req.body.productId;
     req.user.reomveAtTheCart(proId);
     res.redirect("/cart");
 }
 
+//ارسال سفارشات کاربر به دیتابیس 
 exports.postOrder = (req,res) => {
     req.user.populate("cart.items.productId").then(
         user => {
-
             const products = user.cart.items.map(i => {
-                return {product: i.ProductId, quantity: i.quantity}
+                return {quantity: i.quantity,product: i.ProductId, }
             });
 
             const order = new Order( {
                     user : {
-                        name : req.user,
+                        name : req.user.name,
                         userId : req.user
                     },
                     products : products
                 },
             );
+
+            res.redirect("/cart")
             return order.save();
         }
     )
