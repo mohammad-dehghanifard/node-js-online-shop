@@ -81,8 +81,8 @@ exports.removeProductInCart = (req,res) => {
 exports.postOrder = (req,res) => {
     req.user.populate("cart.items.productId").then(
         user => {
-            const products = user.cart.items.map(i => {
-                return {quantity: i.quantity,product: i.ProductId, }
+            const productList = user.cart.items.map(i => {
+                return {quantity: i.quantity,product: i.productId}
             });
 
             const order = new Order( {
@@ -90,7 +90,7 @@ exports.postOrder = (req,res) => {
                         name : req.user.name,
                         userId : req.user
                     },
-                    products : products
+                    products : productList
                 },
             );
 
