@@ -86,7 +86,7 @@ userSchema.methods.reomveAtTheCart = function(productId){
 //claear cart
 userSchema.methods.removeAllItemsInCart = function(){
     this.cart = {
-        items : {}
+        items : []
     }
     return this.save();
 }

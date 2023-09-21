@@ -1,0 +1,25 @@
+<%- include("../inc/heading.ejs") %>
+<%- include("../inc/shop_head.ejs") %>
+<%- include("../inc/navbar.ejs") %>
+
+<main>
+    <main>
+  <ul class="orders">
+    <% orders.forEach(order => { %>
+    <li class="orders_item">
+      <h1>شناسه سفارش - <%= order._id %></h1>
+      <ul class="orders_products">
+        <% order.products.forEach(p =>{ %>
+        <li class="orders_products_item">
+          <%= p.product.title %> (<%= p.quantity %>)
+        </li>
+        <% }); %>
+      </ul>
+    </li>
+    <% }); %>
+
+  </ul>
+</main>
+</main>
+
+<%- include("../inc/fotter.ejs") %>

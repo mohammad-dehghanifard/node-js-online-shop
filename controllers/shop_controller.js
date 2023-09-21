@@ -93,10 +93,23 @@ exports.postOrder = (req,res) => {
                     products : productList
                 },
             );
-
-            res.redirect("/cart")
             return order.save();
         }
     ).then( () =>{ return req.user.removeAllItemsInCart();})
     .then(()=> {res.redirect("/orders")})
+}
+
+exports.getAllOrders = (req,res) => {
+ Order.find({'user.userId': req.user._id}).then(
+    orders => {
+        res.render(
+            "shop/orders",
+            {
+                path : "/allorders",
+                pageTitle : "سفارشات شما",
+                orders : orders
+            }
+            )
+    }
+ )
 }
