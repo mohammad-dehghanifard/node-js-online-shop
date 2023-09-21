@@ -83,4 +83,12 @@ userSchema.methods.reomveAtTheCart = function(productId){
     return this.save();
 }
 
+//claear cart
+userSchema.methods.removeAllItemsInCart = function(){
+    this.cart = {
+        items : {}
+    }
+    return this.save();
+}
+
 module.exports = mongoose.model("User",userSchema)
