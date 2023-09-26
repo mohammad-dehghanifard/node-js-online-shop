@@ -98,7 +98,7 @@ exports.postOrder = (req,res) => {
     ).then( () =>{ return req.user.removeAllItemsInCart();})
     .then(()=> {res.redirect("/orders")})
 }
-
+// دریافت لیست سفارشات کاربر
 exports.getAllOrders = (req,res) => {
  Order.find({'user.userId': req.user._id}).then(
     orders => {
