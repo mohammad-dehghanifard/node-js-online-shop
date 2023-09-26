@@ -1,12 +1,14 @@
 const Product = require("../models/product")
+const cookieParser = require("../utils/cookie_parser")
 
 
 function getAddProducte(req,res){
+    const isLogged = cookieParser(req);
     res.render("admin/add-product",{
         path : "admin/add-product",
         pageTitle : "افزودن محصول جدید",
         editing : false,
-        isAuthenticated : false,
+        isAuthenticated : isLogged["loggedIn"],
     })
 }
 
@@ -33,13 +35,14 @@ function addPostProduct(req,res){
 }
 
 function getAllProducts(req,res){
+    const isLogged = cookieParser(req);
     Product.find().
     then(products => {
         res.render("admin/products",{
             path : "/products",
             pageTitle : "محصولات ادمین",
             productList : products,
-            isAuthenticated : false,
+            isAuthenticated : isLogged["loggedIn"],
         })
     }).catch(
         error => {console.log(error)}
@@ -48,6 +51,7 @@ function getAllProducts(req,res){
 
 function getEditProduct(req,res){
  const editMode = req.query.edit;
+ const isLogged = cookieParser(req);
 
  if(!editMode){
     res.redirect("/");
@@ -69,7 +73,7 @@ function getEditProduct(req,res){
                 pageTitle : "ویرایش مخصول جدید",
                 editing : editMode,
                 product : product,
-                isAuthenticated : false,
+                isAuthenticated : isLogged["loggedIn"],
             }
             )
     }

@@ -2,11 +2,10 @@ const cookieParser = require("../utils/cookie_parser")
 
 exports.renderLoginPage = (req,res) => {
     const isLogged = cookieParser(req);
-    console.log(isLogged["loggedIn"]);
     res.render("auth/login",{
         path: "/login",
         pageTitle : "ورود به حساب کاربری",
-        isAuthenticated : false,
+        isAuthenticated : isLogged["loggedIn"],
     })
     
 }

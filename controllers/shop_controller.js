@@ -1,19 +1,22 @@
 const Product = require("../models/product");
-const Order = require("../models/order")
+const Order = require("../models/order");
+const cookieParser = require("../utils/cookie_parser");
 
 // نمایش محصولات داخل صفحه اصلی
 exports.getAllProduct = (req,res) => {
+    const isLogged = cookieParser(req);
     const data = Product.find().then(products => {
         res.render("shop/index",{
             path : "/",
             pageTitle : "صفحه اصلی",
             productList : products,
-            isAuthenticated : false,
+            isAuthenticated : isLogged["loggedIn"],
         })
     })
 }
 
 exports.getProductById = (req,res) => {
+    const isLogged = cookieParser(req);
     const productId = req.params.productId;
     Product.findById(productId).then(
         product => {
@@ -23,7 +26,7 @@ exports.getProductById = (req,res) => {
                     path : "/alldetail",
                     pageTitle : "مشاهده محصول",
                     product : product,
-                    isAuthenticated : false,
+                    isAuthenticated : isLogged["loggedIn"],
                 }
                 )
         }
@@ -32,6 +35,7 @@ exports.getProductById = (req,res) => {
 
 // نمایش تمام محصولات داخل صفحه مربوط به محصولات
 exports.getAllProductList = (req,res) => {
+    const isLogged = cookieParser(req);
     Product.find().then(
         products => {
             res.render(
@@ -40,7 +44,7 @@ exports.getAllProductList = (req,res) => {
                     path : "/allproducts",
                     pageTitle : "مشاهده همه محصولات",
                     productList : products,
-                    isAuthenticated : false,
+                    isAuthenticated : isLogged["loggedIn"],
                 }
                 )
         }
@@ -62,6 +66,7 @@ exports.addOrUpadateCart = (req,res) =>{
 exports.getallCartProducts = async (req,res) => {
     // populate => به ایتم های زیر مجموعه دسترسی پیدا میکنیم
     const data = await req.user.populate('cart.items.productId');
+    const isLogged = cookieParser(req);
 
     res.render(
         "shop/cart",
@@ -69,7 +74,7 @@ exports.getallCartProducts = async (req,res) => {
             path : "/cart",
             pageTitle : "سبد خرید",
             productList : data.cart.items,
-            isAuthenticated : false,
+            isAuthenticated : isLogged["loggedIn"],
         }
     )
 }
@@ -104,6 +109,7 @@ exports.postOrder = (req,res) => {
 }
 // دریافت لیست سفارشات کاربر
 exports.getAllOrders = (req,res) => {
+    const isLogged = cookieParser(req);
  Order.find({'user.userId': req.user._id}).then(
     orders => {
         res.render(
@@ -112,7 +118,7 @@ exports.getAllOrders = (req,res) => {
                 path : "/allorders",
                 pageTitle : "سفارشات شما",
                 orders : orders,
-                isAuthenticated : false,
+                isAuthenticated : isLogged["loggedIn"],
             }
             )
     }
