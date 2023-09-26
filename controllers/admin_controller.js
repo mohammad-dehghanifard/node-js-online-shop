@@ -6,6 +6,7 @@ function getAddProducte(req,res){
         path : "admin/add-product",
         pageTitle : "افزودن محصول جدید",
         editing : false,
+        isAuthenticated : false,
     })
 }
 
@@ -38,6 +39,7 @@ function getAllProducts(req,res){
             path : "/products",
             pageTitle : "محصولات ادمین",
             productList : products,
+            isAuthenticated : false,
         })
     }).catch(
         error => {console.log(error)}
@@ -66,7 +68,8 @@ function getEditProduct(req,res){
                 path : "admin/edit-product",
                 pageTitle : "ویرایش مخصول جدید",
                 editing : editMode,
-                product : product
+                product : product,
+                isAuthenticated : false,
             }
             )
     }

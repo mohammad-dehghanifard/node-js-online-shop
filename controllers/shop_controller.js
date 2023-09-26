@@ -8,6 +8,7 @@ exports.getAllProduct = (req,res) => {
             path : "/",
             pageTitle : "صفحه اصلی",
             productList : products,
+            isAuthenticated : false,
         })
     })
 }
@@ -22,6 +23,7 @@ exports.getProductById = (req,res) => {
                     path : "/alldetail",
                     pageTitle : "مشاهده محصول",
                     product : product,
+                    isAuthenticated : false,
                 }
                 )
         }
@@ -37,7 +39,8 @@ exports.getAllProductList = (req,res) => {
                 {
                     path : "/allproducts",
                     pageTitle : "مشاهده همه محصولات",
-                    productList : products
+                    productList : products,
+                    isAuthenticated : false,
                 }
                 )
         }
@@ -65,7 +68,8 @@ exports.getallCartProducts = async (req,res) => {
         {
             path : "/cart",
             pageTitle : "سبد خرید",
-            productList : data.cart.items
+            productList : data.cart.items,
+            isAuthenticated : false,
         }
     )
 }
@@ -107,7 +111,8 @@ exports.getAllOrders = (req,res) => {
             {
                 path : "/allorders",
                 pageTitle : "سفارشات شما",
-                orders : orders
+                orders : orders,
+                isAuthenticated : false,
             }
             )
     }

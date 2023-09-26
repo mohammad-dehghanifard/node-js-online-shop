@@ -9,7 +9,8 @@
         <li class="nav-item">
           <a class="nav-link <%= path === "/allproducts" ? 'active' : "" %>" href="/allproducts">محصولات</a>
         </li>
-
+        
+        <% if(isAuthenticated){ %>
         <li class="nav-item">
           <a class="nav-link <%= path === "/cart" ? 'active' : "" %>" href="/cart">سبد خرید</a>
         </li>
@@ -25,7 +26,8 @@
         <li class="nav-item">
           <a class="nav-link <%= path === "/products" ? 'active' : "" %>" href="/admin/products">محصولات ادمین</a>
         </li>
-
+        <% } %>
+        
       </ul>
     </div>
 
