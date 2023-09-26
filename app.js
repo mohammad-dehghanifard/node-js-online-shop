@@ -4,8 +4,9 @@ const bodyParser = require("body-parser");
 const mongoose = require('mongoose');
 const adminRouter = require("./routes/admin");
 const shopRouter = require("./routes/shop");
+const authRouter = require("./routes/auth")
 const User = require("./models/user");
-const user = require("./models/user");
+
 
 const port = 3030;
 const app = express();
@@ -29,7 +30,8 @@ app.use((req,res,next)=>{
 
 // نوشته بشه admin قبل از ریکوئست های پنل ادمین حتما باید 
 app.use("/admin",adminRouter);
-app.use(shopRouter)
+app.use(shopRouter);
+app.use(authRouter);
 
 
 mongoose.connect("mongodb://0.0.0.0:27017/shop")
