@@ -6,6 +6,7 @@ const adminRouter = require("./routes/admin");
 const shopRouter = require("./routes/shop");
 const authRouter = require("./routes/auth")
 const User = require("./models/user");
+const session = require('express-session')
 
 
 const port = 3030;
@@ -27,6 +28,12 @@ app.use((req,res,next)=>{
         }
     ).catch(err => {console.log("Error: ",err)})
 });
+//session config
+app.use(session({
+    secret : "my secret",
+    resave: false,
+    saveUninitialized: false,
+}))
 
 // نوشته بشه admin قبل از ریکوئست های پنل ادمین حتما باید 
 app.use("/admin",adminRouter);
