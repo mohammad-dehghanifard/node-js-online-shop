@@ -6,14 +6,22 @@ const adminRouter = require("./routes/admin");
 const shopRouter = require("./routes/shop");
 const authRouter = require("./routes/auth")
 const User = require("./models/user");
-const session = require('express-session')
+const session = require('express-session');
+const MongoDBStore = require('connect-mongodb-session')(session);
 
 
 const port = 3030;
 const app = express();
+const mongoUri = "mongodb://0.0.0.0:27017/shop";
 
 app.set("views,views");
 app.set("view engine","ejs")
+var store = new MongoDBStore(
+    {
+        uri: mongoUri,
+        collection: "session"
+    }
+);
 
 // static مشخص کردن مسیر فایل های 
 app.use(express.static(path.join(__dirname,"public")))
@@ -33,6 +41,7 @@ app.use(session({
     secret : "my secret",
     resave: false,
     saveUninitialized: false,
+    store: store,
 }))
 
 // نوشته بشه admin قبل از ریکوئست های پنل ادمین حتما باید 
@@ -41,7 +50,7 @@ app.use(shopRouter);
 app.use(authRouter);
 
 
-mongoose.connect("mongodb://0.0.0.0:27017/shop")
+mongoose.connect(mongoUri)
 .then(result => {
     app.listen(port,()=>{
         
