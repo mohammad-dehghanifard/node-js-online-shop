@@ -22,7 +22,9 @@
           </div>
           <div class="card__actions">
             <a href="/product/<%= product._id %>" class="btn btn-primary">جزئیات</a>
+            <% if(isAuthenticated){ %>
             <%- include("../inc/add-to-basket-btn.ejs",{product : product}) %>
+            <% } %>
           </div>
         </article>
 

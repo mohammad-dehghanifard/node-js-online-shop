@@ -66,8 +66,6 @@ exports.addOrUpadateCart = (req,res) =>{
 exports.getallCartProducts = async (req,res) => {
     // populate => به ایتم های زیر مجموعه دسترسی پیدا میکنیم
     const data = await req.user.populate('cart.items.productId');
-    const isLogged = cookieParser(req);
-
     res.render(
         "shop/cart",
         {
@@ -109,7 +107,6 @@ exports.postOrder = (req,res) => {
 }
 // دریافت لیست سفارشات کاربر
 exports.getAllOrders = (req,res) => {
-    const isLogged = cookieParser(req);
  Order.find({'user.userId': req.user._id}).then(
     orders => {
         res.render(
