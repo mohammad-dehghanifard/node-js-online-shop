@@ -8,7 +8,7 @@ function getAddProducte(req,res){
         path : "admin/add-product",
         pageTitle : "افزودن محصول جدید",
         editing : false,
-        isAuthenticated : isLogged["loggedIn"],
+        isAuthenticated : req.session.loggedIn,
     })
 }
 
@@ -42,7 +42,7 @@ function getAllProducts(req,res){
             path : "/products",
             pageTitle : "محصولات ادمین",
             productList : products,
-            isAuthenticated : isLogged["loggedIn"],
+            isAuthenticated : req.session.loggedIn,
         })
     }).catch(
         error => {console.log(error)}
@@ -73,7 +73,7 @@ function getEditProduct(req,res){
                 pageTitle : "ویرایش مخصول جدید",
                 editing : editMode,
                 product : product,
-                isAuthenticated : isLogged["loggedIn"],
+                isAuthenticated : req.session.loggedIn,
             }
             )
     }

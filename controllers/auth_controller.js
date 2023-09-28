@@ -5,7 +5,7 @@ exports.renderLoginPage = (req,res) => {
     res.render("auth/login",{
         path: "/login",
         pageTitle : "ورود به حساب کاربری",
-        isAuthenticated : isLogged["loggedIn"],
+        isAuthenticated : false,
     })
     
 }
@@ -14,4 +14,10 @@ exports.postLogin = (req,res) => {
     // ذخیره وضعیت لاگین کاربر در کوکی ها
     req.session.loggedIn = true;
     res.redirect("/");
+}
+
+exports.postLogOut = (req,res) => {
+    req.session.destroy((err) => {
+        res.redirect("/");
+    });
 }
