@@ -1,5 +1,6 @@
 const cookieParser = require("../utils/cookie_parser")
 const User = require("../models/user")
+const bcrypt = require('bcryptjs');
 
 exports.renderLoginPage = (req,res) => {
     const isLogged = cookieParser(req);
@@ -51,17 +52,19 @@ exports.postSignUp = (req,res) => {
             if(userDoc){
                 res.redirect("/login")
             }else{
-                const user = new User(
-                    {
-                        name : username,
-                        passWord : passWord,
-                        email : email,
-                        cart: {
-                            items: []
+                return bcrypt.hash(passWord,16).then(hashPassword => {
+                    const user = new User(
+                        {
+                            name : username,
+                            passWord : hashPassword,
+                            email : email,
+                            cart: {
+                                items: []
+                            }
                         }
-                    }
-                );
-                return user.save()
+                    );
+                    return user.save()
+                })
             }
         }
     ).then(() =>{
