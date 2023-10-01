@@ -11,6 +11,10 @@ const userSchema = new Schema(
             minlength : 3,
             maxlength : 40,
         },
+        passWord : {
+            type : String,
+            required : true,
+        },
         email : {
             type : String,
             required:  true,

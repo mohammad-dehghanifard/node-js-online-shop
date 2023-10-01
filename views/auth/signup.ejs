@@ -8,23 +8,28 @@
         <div class="col-12 col-md-8 col-lg-6 col-xl-5">
           <div class="card shadow-2-strong" style="border-radius: 1rem">
             <div class="card-body p-5 text-center">
-              <h3 class="mb-5">ورود</h3>
+              <h3 class="mb-5">ثبت نام</h3>
 
               <form action="/signup" method="post">
+
                 <div class="form-outline mb-4">
-                  <input type="email" id="typeEmailX-2" class="form-control form-control-lg" placeholder="نام کاربری یا ایمیل خود را وارد کنید">
+                  <input name="name" type="text" id="typeEmailX-2" class="form-control form-control-lg" placeholder="نام کاربری خود را وارد کنید">
+                </div>
+
+                <div class="form-outline mb-4">
+                  <input name="email" type="email" id="typeEmailX-2" class="form-control form-control-lg" placeholder="نام کاربری یا ایمیل خود را وارد کنید">
                 </div>
   
                 <div class="form-outline mb-4">
-                  <input type="password" id="typePasswordX-2" class="form-control form-control-lg" placeholder="رمز عبور را وارد کنید">
+                  <input name="passWord" type="password" id="typePasswordX-2" class="form-control form-control-lg" placeholder="رمز عبور را وارد کنید">
                 </div>
 
                 <div class="form-outline mb-4">
-                    <input type="password" id="typePasswordX-2" class="form-control form-control-lg" placeholder="رمز عبور خود را تائید کنید">
+                    <input name="confirmPassWord" type="password" id="typePasswordX-2" class="form-control form-control-lg" placeholder="رمز عبور خود را تائید کنید">
                   </div>
   
                 <button class="btn btn-success btn-lg btn-block" type="submit">
-                  وارد شوید
+                  ثبت نام
                 </button>
               </form>
 

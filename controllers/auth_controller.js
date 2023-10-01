@@ -39,3 +39,36 @@ exports.getSignPage = (req,res) => {
         }
     ))
 }
+
+exports.postSignUp = (req,res) => {
+    const username = req.body.name;
+    const email = req.body.email;
+    const passWord = req.body.passWord;
+    const confirmPassWord = req.body.confirmPassWord;
+    // در صورتی که یوزری با این ایمل قبلا وجود نداشته باشه، یوزر جدید ساخته میشه
+    User.findOne({email:email}).then(
+        userDoc => {
+            if(userDoc){
+                res.redirect("/login")
+            }else{
+                const user = new User(
+                    {
+                        name : username,
+                        passWord : passWord,
+                        email : email,
+                        cart: {
+                            items: []
+                        }
+                    }
+                );
+                return user.save()
+            }
+        }
+    ).then(() =>{
+        res.redirect("/login");
+    }).catch(
+        error => {
+            console.error(error);
+        }
+    )
+}
