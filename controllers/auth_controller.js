@@ -29,3 +29,13 @@ exports.postLogOut = (req,res) => {
         res.redirect("/");
     });
 }
+
+exports.getSignPage = (req,res) => {
+    res.render("auth/signup",(
+        {
+            path: "/signup",
+            pageTitle: "ثبت نام",
+            isAuthenticated : false
+        }
+    ))
+}
