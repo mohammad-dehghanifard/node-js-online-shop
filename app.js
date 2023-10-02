@@ -27,15 +27,7 @@ var store = new MongoDBStore(
 app.use(express.static(path.join(__dirname,"public")))
 // داده های ارسالی ریسپانس ها رو به جیسون تبدیل میکنه
 app.use(bodyParser.urlencoded({extended: false}))
-// لاگین موقت برای نگهداری یوزر داخل ریکوئست
-app.use((req,res,next)=>{
-    User.findById("64ec2f18b0d3e21f425a6b34").then(
-        user =>{
-            req.user = user;
-            next();
-        }
-    ).catch(err => {console.log("Error: ",err)})
-});
+
 //session config
 app.use(session({
     secret : "my secret",

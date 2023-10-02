@@ -13,12 +13,26 @@ exports.renderLoginPage = (req,res) => {
 }
 
 exports.postLogin = (req,res) => {
+    const email = req.body.email;
+    const pass = req.body.passWord;
     // ذخیره وضعیت لاگین کاربر در کوکی ها
-    User.findById("64ec2f18b0d3e21f425a6b34").then(
+    User.findOne({email:email}).then(
         user => {
-            req.session.loggedIn = true;
-            req.session.user = user;
-            req.session.save((err) => {res.redirect("/"); })
+
+           if(!user){
+            res.redirect("/login");
+           }
+
+           // conpare user password and login
+           bcrypt.compare(pass,user.passWord).then(isMatch => {
+            if(isMatch){
+                req.session.loggedIn = true;
+                req.session.user = user;
+                req.session.save((err) => {res.redirect("/"); })
+            }else{
+                res.redirect("/login");
+            }
+           })
         }
     );
     
