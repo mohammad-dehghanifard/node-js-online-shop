@@ -8,11 +8,13 @@ const authRouter = require("./routes/auth")
 const User = require("./models/user");
 const session = require('express-session');
 const MongoDBStore = require('connect-mongodb-session')(session);
+const csrf = require('csurf');
 
 
 const port = 3030;
 const app = express();
 const mongoUri = "mongodb://0.0.0.0:27017/shop";
+var csrfProtection = csrf();
 
 app.set("views,views");
 app.set("view engine","ejs")
@@ -36,6 +38,14 @@ app.use(session({
     store: store,
 }))
 
+app.use(csrfProtection);
+// send locale propertis
+app.use((req,res,next) => {
+    res.locals.isAuthenticated = req.session.loggedIn;
+    res.locals.csrfToken = req.csrfToken();
+    next();
+})
+
 
 
 app.use((req, res, next) => {
@@ -56,29 +66,10 @@ app.use(shopRouter);
 app.use(authRouter);
 
 
+
 mongoose.connect(mongoUri)
 .then(result => {
     app.listen(port,()=>{
-        
-        // در صورتی که یوزی وجود نداشته باشه یه یوزر درست میکنه
-        User.findOne().then(
-            user => {
-                if(!user){
-                    const shopUser = new User(
-                        {
-                            name : "mohammad dehghanifard",
-                            email: "mohammad@gmail.com",
-                            cart : {
-                                items : []
-                            }
-                        }
-                    );
-                    shopUser.save();
-                }
-            }
-        )
-
-
         console.log("connecte to database and listen on port :",port)
     })
 })

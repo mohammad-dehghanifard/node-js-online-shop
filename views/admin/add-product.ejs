@@ -5,6 +5,7 @@
 <main>
     <div class="container">
       <form action="/admin/<% if (editing) { %>edit-product<% } else { %>add-product<% } %>" method="post">
+        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
         <div class="form-group">
           <label for="title">عنوان</label>
           <input

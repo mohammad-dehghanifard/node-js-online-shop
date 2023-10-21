@@ -10,7 +10,6 @@ exports.getAllProduct = (req,res) => {
             path : "/",
             pageTitle : "صفحه اصلی",
             productList : products,
-            isAuthenticated : req.session.loggedIn,
         })
     })
 }
@@ -26,7 +25,6 @@ exports.getProductById = (req,res) => {
                     path : "/alldetail",
                     pageTitle : "مشاهده محصول",
                     product : product,
-                    isAuthenticated : req.session.loggedIn
                 }
                 )
         }
@@ -44,7 +42,6 @@ exports.getAllProductList = (req,res) => {
                     path : "/allproducts",
                     pageTitle : "مشاهده همه محصولات",
                     productList : products,
-                    isAuthenticated : req.session.loggedIn
                 }
                 )
         }
