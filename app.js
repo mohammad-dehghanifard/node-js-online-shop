@@ -9,6 +9,7 @@ const User = require("./models/user");
 const session = require('express-session');
 const MongoDBStore = require('connect-mongodb-session')(session);
 const csrf = require('csurf');
+const flash = require('connect-flash');
 
 
 const port = 3030;
@@ -29,7 +30,8 @@ var store = new MongoDBStore(
 app.use(express.static(path.join(__dirname,"public")))
 // داده های ارسالی ریسپانس ها رو به جیسون تبدیل میکنه
 app.use(bodyParser.urlencoded({extended: false}))
-
+// برای پاس دادن داده موقع ری دایرکت کردن کاربر
+app.use(flash());
 //session config
 app.use(session({
     secret : "my secret",

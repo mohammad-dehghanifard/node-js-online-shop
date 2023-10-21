@@ -29,6 +29,7 @@
     <div class="container">
       <div class="centered">
         <form action="/add-order" method="post">
+          <input type="hidden" name="_csrf" value="<%= csrfToken %>">
           <button type="submit" class="btn btn-success">پرداخت نهایی و سفارش محصولات</button>
         </form>
       </div>

@@ -69,7 +69,6 @@ exports.getallCartProducts = async (req,res) => {
             path : "/cart",
             pageTitle : "سبد خرید",
             productList : user.cart.items,
-            isAuthenticated : req.session.loggedIn,
         }
     )
 }
@@ -112,7 +111,6 @@ exports.getAllOrders = (req,res) => {
                 path : "/allorders",
                 pageTitle : "سفارشات شما",
                 orders : orders,
-                isAuthenticated : req.session.loggedIn,
             }
             )
     }

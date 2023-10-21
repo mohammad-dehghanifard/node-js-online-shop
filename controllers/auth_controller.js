@@ -3,11 +3,19 @@ const User = require("../models/user")
 const bcrypt = require('bcryptjs');
 
 exports.renderLoginPage = (req,res) => {
-    const isLogged = cookieParser(req);
+    // اگر دیتا وجود نداشته باشه ارایه خالی برمیگردونه
+    let errorMessage = req.flash('LoginError');
+    
+    if(errorMessage.length > 0){
+        errorMessage = errorMessage[0];
+    }else{
+        errorMessage = errorMessage;
+    }
+    console.log(req.flash('LoginError'));
     res.render("auth/login",{
         path: "/login",
         pageTitle : "ورود به حساب کاربری",
-        isAuthenticated : false,
+        message : errorMessage
     })
     
 }
@@ -20,6 +28,7 @@ exports.postLogin = (req,res) => {
         user => {
 
            if(!user){
+            req.flash('LoginError','نام کاربری یا رمز عبور وارد شده اشتباه میباشد');
             res.redirect("/login");
            }
 
@@ -30,6 +39,7 @@ exports.postLogin = (req,res) => {
                 req.session.user = user;
                 req.session.save((err) => {res.redirect("/"); })
             }else{
+                req.flash('LoginError','نام کاربری یا رمز عبور وارد شده اشتباه میباشد');
                 res.redirect("/login");
             }
            })
