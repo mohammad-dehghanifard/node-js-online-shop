@@ -1,6 +1,7 @@
 const cookieParser = require("../utils/cookie_parser")
 const User = require("../models/user")
 const bcrypt = require('bcryptjs');
+const emailService = require("../utils/email_sender")
 
 exports.renderLoginPage = (req,res) => {
     // اگر دیتا وجود نداشته باشه ارایه خالی برمیگردونه
@@ -92,6 +93,13 @@ exports.postSignUp = (req,res) => {
             }
         }
     ).then(() =>{
+        emailService(
+            {
+                to: email, 
+                subject: "خوش آمدید", 
+                text: "ثبت نام شما با موفقیت انجام شد به فروشگاه ما خوش آمدید",
+            }
+        )
         res.redirect("/login");
     }).catch(
         error => {
