@@ -7,5 +7,6 @@ router.post("/login",authController.postLogin)
 router.post("/logOut",authController.postLogOut);
 router.get("/signup",authController.getSignPage);
 router.post("/signup",authController.postSignUp);
+router.get("/resetPass",authController.renderResetPassView);
 
 module.exports = router;

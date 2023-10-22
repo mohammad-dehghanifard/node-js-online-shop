@@ -8,35 +8,22 @@
         <div class="col-12 col-md-8 col-lg-6 col-xl-5">
           <div class="card shadow-2-strong" style="border-radius: 1rem">
             <div class="card-body p-5 text-center">
-              
-              <!-- نمایش خطا در صورت وارد کردن ایمیل یا پسورد اشتباه -->
-              <% if(message != null){ %>
-                <div class="alert alert-danger" role="alert">
-                  <%= message %>
-                </div>
-                <% } %>
 
               <h3 class="mb-5">ورود</h3>
 
-              <form action="/login" method="post">
+              <form action="/resetPass" method="get">
                 <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                 <div class="form-outline mb-4">
                   <input name="email" type="email" id="typeEmailX-2" class="form-control form-control-lg" placeholder="ایمیل خود را وارد کنید">
                 </div>
-  
-                <div class="form-outline mb-4">
-                  <input name="passWord" type="password" id="typePasswordX-2" class="form-control form-control-lg" placeholder="رمز عبور را وارد کنید">
-                </div>
+
   
                 <button class="btn btn-primary btn-lg btn-block" type="submit">
-                  وارد شوید
+                  بازیابی رمزعبور
                 </button>
               </form>
-              
-                <br>
-                <div>
-                  <a href="/resetPass">فراموشی رمز عبور</a>
-                </div>
+
+
            
             </div>
           </div>
