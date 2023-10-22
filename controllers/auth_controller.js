@@ -99,7 +99,8 @@ exports.postSignUp = (req,res) => {
         }
     )
 }
-
+// رندر کردن صفحه بازیابی رمزعبور
 exports.renderResetPassView = (req,res) => {
     res.render('auth/reset_Pass',{pageTitle: "بازیابی رمز عبور",})
 }
+
