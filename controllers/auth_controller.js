@@ -1,7 +1,9 @@
-const cookieParser = require("../utils/cookie_parser")
-const User = require("../models/user")
+const cookieParser = require("../utils/cookie_parser");
+const User = require("../models/user");
 const bcrypt = require('bcryptjs');
-const emailService = require("../utils/email_sender")
+const sendEmail = require("../utils/email_sender");
+const crypto = require('crypto');
+const user = require("../models/user");
 
 exports.renderLoginPage = (req,res) => {
     // اگر دیتا وجود نداشته باشه ارایه خالی برمیگردونه
@@ -104,3 +106,39 @@ exports.renderResetPassView = (req,res) => {
     res.render('auth/reset_Pass',{pageTitle: "بازیابی رمز عبور",})
 }
 
+// ارسال توکن برای بازیابی رمز عبور به ایمیل کاربر
+exports.sendTokenForResetPassWord = (req,res) => {
+    // ایجاد توکن
+    crypto.randomBytes(
+        32,
+        (err,buf) =>{
+            if(err){
+                console.log(err);
+                res.redirect("/restPass")
+            }
+
+            const token = buf.toString('hex');
+            User.findOne({email: req.body.email}).then(user => {
+
+                if(!user){
+                    console.log("این ایمیل در دیتابیس وجود ندارد");
+                    return res.redirect("/login");
+                }
+                //save token and expire date token in database
+                user.resetToken = token;
+                user.expireResetTokenDate = Date.now() + 3600000;
+                return user.save();
+
+            }).then(result => {
+                res.redirect('/login');
+                sendEmail({
+                     userMail : req.body.email, 
+                     subject : "بازیابی رمز عبور", 
+                     html : `<p>جهت بازیابی رمز عبور خود روی لینک زیر کلیک کنید</p>
+                     <a href="http://localhost:3030/resetPass/${token}">بازیابی رمزعبور</a>
+                     `,
+                })
+            })
+        }
+    );
+}

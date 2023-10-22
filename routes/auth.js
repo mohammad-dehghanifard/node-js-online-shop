@@ -8,5 +8,6 @@ router.post("/logOut",authController.postLogOut);
 router.get("/signup",authController.getSignPage);
 router.post("/signup",authController.postSignUp);
 router.get("/resetPass",authController.renderResetPassView);
+router.post("/resetPass",authController.sendTokenForResetPassWord);
 
 module.exports = router;
