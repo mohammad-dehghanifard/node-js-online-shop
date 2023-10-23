@@ -131,14 +131,18 @@ exports.sendTokenForResetPassWord = (req,res) => {
 
             }).then(result => {
                 res.redirect('/login');
-                sendEmail({
-                     userMail : req.body.email, 
-                     subject : "بازیابی رمز عبور", 
-                     html : `<p>جهت بازیابی رمز عبور خود روی لینک زیر کلیک کنید</p>
-                     <a href="http://localhost:3030/resetPass/${token}">بازیابی رمزعبور</a>
-                     `,
-                })
+                // بخش ارسال ایمل باگ داره
+                // sendEmail({
+                //      userMail : req.body.email, 
+                //      subject : "بازیابی رمز عبور", 
+                //      html : `<p>جهت بازیابی رمز عبور خود روی لینک زیر کلیک کنید</p>
+                //      <a href="http://localhost:3030/resetPass/${token}">بازیابی رمزعبور</a>
+                //      `,
+                // })
             })
         }
     );
 }
+
+
+
