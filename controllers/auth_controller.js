@@ -121,7 +121,6 @@ exports.sendTokenForResetPassWord = (req,res) => {
             User.findOne({email: req.body.email}).then(user => {
 
                 if(!user){
-                    console.log("این ایمیل در دیتابیس وجود ندارد");
                     return res.redirect("/login");
                 }
                 //save token and expire date token in database
@@ -147,7 +146,6 @@ exports.sendTokenForResetPassWord = (req,res) => {
 exports.renderSetNewPassWordView = (req,res) => {
     const token = req.params.token;
     User.findOne({resetToken:token}).then(user => {
-        console.log(user);
         res.render(
             'auth/set_new_pass',
             {

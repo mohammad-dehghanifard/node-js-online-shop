@@ -35,7 +35,7 @@ function addPostProduct(req,res){
 
 function getAllProducts(req,res){
     const isLogged = cookieParser(req);
-    Product.find().
+    Product.find({userId : req.user._id}).
     then(products => {
         res.render("admin/products",{
             path : "/products",
