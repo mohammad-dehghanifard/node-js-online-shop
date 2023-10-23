@@ -33,9 +33,10 @@ function addPostProduct(req,res){
 
 }
 
+//دریافت تمام محصولات فروشنده
 function getAllProducts(req,res){
     const isLogged = cookieParser(req);
-    Product.find({userId : req.user._id}).
+    Product.find({userId: req.user._id}).
     then(products => {
         res.render("admin/products",{
             path : "/products",
@@ -81,6 +82,11 @@ function getEditProduct(req,res){
 function postEditProduct(req,res) {
     const productId = req.body.productID;
 
+    // در صورتی که کاربر دیگه ای به جز صاحب محصول باشه ویرایش انجام نمیشه و به صفحه اصلی منتقل میشه
+    if(productId.toString() !== req.user._id.toString()){
+        return res.redirect("/");
+    }
+
     const updatedTitle = req.body.title;
     const updatedPrice = req.body.price;
     const updatedImageUrl = req.body.imageurl;
@@ -91,22 +97,30 @@ function postEditProduct(req,res) {
         product.price = updatedPrice;
         product.imageurl = updatedImageUrl;
         product.content = updatedContent;
-        return product.save();
-    })
-    .then(result => {
-        res.redirect("/");
-    });
+        return product.save().then(result => {
+            res.redirect("/");
+        });
+    }).catch(err => {console.error(err)});
+    
 }
 
 function deleteProduct(req,res){
     const productID = req.body.productId;
 
-    Product.findByIdAndRemove(productID)
-    .then(()=>{
-        console.log("Product Deleted....");
-        res.redirect("/admin/products")
+    Product.findOneAndDelete({
+        _id : productID,
+        userId : req.user._id // برای جلوگیری از حذف محصول توسط فروشنده های دیگه
     })
-    .catch(error => {console.error(error.message)})
+    .then(product =>{
+        if(product){
+         console.log("Product Deleted....");
+         res.redirect("/admin/products")
+        }else{
+            res.redirect("/")
+        }
+    })
+    .catch(error => {
+        console.error(error.message)})
 }
 
 module.exports = {
