@@ -10,5 +10,6 @@ router.post("/signup",authController.postSignUp);
 router.get("/resetPass",authController.renderResetPassView);
 router.post("/resetPass",authController.sendTokenForResetPassWord);
 router.get("/resetPass/:token",authController.renderSetNewPassWordView);
+router.post("/save-NewPass",authController.updateResetPassWordInDb);
 
 module.exports = router;

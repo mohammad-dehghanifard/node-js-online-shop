@@ -11,13 +11,13 @@
             
               <h3 class="mb-5">بازیابی رمز عبور</h3>
 
-              <form action="/login" method="post">
+              <form action="/save-NewPass" method="post">
                 <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                 <input type="hidden" name="userId" value="<%= userId %>">
                 <input type="hidden" name="passWordToken" value="<%= passWordToken %>">
 
                 <div class="form-outline mb-4">
-                  <input name="passWord" type="password" id="typePasswordX-2" class="form-control form-control-lg" placeholder="رمز عبور جدید را وارد کنید">
+                  <input name="newPassWord" type="password" id="typePasswordX-2" class="form-control form-control-lg" placeholder="رمز عبور جدید را وارد کنید">
                 </div>
   
                 <button class="btn btn-primary btn-lg btn-block" type="submit">

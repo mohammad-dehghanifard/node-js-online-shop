@@ -159,3 +159,28 @@ exports.renderSetNewPassWordView = (req,res) => {
     });
 }
 
+exports.updateResetPassWordInDb = (req,res) => {
+    const newPass = req.body.newPassWord;
+    const userId = req.body.userId;
+    const passWordToken = req.body.passWordToken;
+    let extractedUser;
+
+    User.findOne({
+        resetToken: passWordToken,
+        expireResetTokenDate : {$gt : Date.now()},
+        _id : userId
+    }).then(user => {
+        extractedUser = user;
+        return bcrypt.hash(newPass,12);
+    }).then(hashPassword => {
+        extractedUser.passWord = hashPassword;
+        extractedUser.resetToken = undefined;
+        extractedUser.expireResetTokenDate = undefined;
+        return extractedUser.save();
+    }).then(result => {
+        res.redirect("/login");
+    }).catch(err => {
+        console.error(err);
+    });
+}
+
