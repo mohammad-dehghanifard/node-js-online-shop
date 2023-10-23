@@ -149,7 +149,7 @@ exports.renderSetNewPassWordView = (req,res) => {
     User.findOne({resetToken:token}).then(user => {
         console.log(user);
         res.render(
-            'auth/reset_Pass',
+            'auth/set_new_pass',
             {
                 pageTitle: "تعویض رمز عبور",
                 userId: user._id.toString(),
