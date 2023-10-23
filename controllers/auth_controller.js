@@ -144,5 +144,18 @@ exports.sendTokenForResetPassWord = (req,res) => {
     );
 }
 
-
+exports.renderSetNewPassWordView = (req,res) => {
+    const token = req.params.token;
+    User.findOne({resetToken:token}).then(user => {
+        console.log(user);
+        res.render(
+            'auth/reset_Pass',
+            {
+                pageTitle: "تعویض رمز عبور",
+                userId: user._id.toString(),
+                passWordToken : token,
+            }
+            )
+    });
+}
 
