@@ -81,7 +81,7 @@ exports.postSignUp = (req,res) => {
             {
                 path: "/signup",
                 pageTitle: "ثبت نام",
-                errorMsg: errors.array()[0].msg, // 0 => email validate result object
+                errorMsg: errors.array()[0].msg,
             }
         )
        )
