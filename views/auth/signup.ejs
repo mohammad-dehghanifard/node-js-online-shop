@@ -10,7 +10,7 @@
             <div class="card-body p-5 text-center">
               <h3 class="mb-5">ثبت نام</h3>
 
-              <form action="/signup" method="post">
+              <form action="/signup" method="post" novalidate>
                 <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                 <div class="form-outline mb-4">
                   <input name="name" type="text" id="typeEmailX-2" class="form-control form-control-lg" placeholder="نام کاربری خود را وارد کنید">

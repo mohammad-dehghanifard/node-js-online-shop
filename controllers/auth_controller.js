@@ -4,6 +4,7 @@ const bcrypt = require('bcryptjs');
 const sendEmail = require("../utils/email_sender");
 const crypto = require('crypto');
 const user = require("../models/user");
+const {validationResult} = require("express-validator");
 
 exports.renderLoginPage = (req,res) => {
     // اگر دیتا وجود نداشته باشه ارایه خالی برمیگردونه
@@ -72,6 +73,22 @@ exports.postSignUp = (req,res) => {
     const email = req.body.email;
     const passWord = req.body.passWord;
     const confirmPassWord = req.body.confirmPassWord;
+    const errors = validationResult(req);
+
+    if(!errors.isEmpty()){
+        console.error(errors.array());
+
+       return res.status(422).render(
+        "auth/signup",(
+            {
+                path: "/signup",
+                pageTitle: "ثبت نام",
+                //isAuthenticated : false
+            }
+        )
+       )
+    }
+
     // در صورتی که یوزری با این ایمل قبلا وجود نداشته باشه، یوزر جدید ساخته میشه
     User.findOne({email:email}).then(
         userDoc => {
