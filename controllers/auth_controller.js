@@ -63,7 +63,8 @@ exports.getSignPage = (req,res) => {
         {
             path: "/signup",
             pageTitle: "ثبت نام",
-            errorMsg: null
+            errorMsg: null,
+            oldInput: null
         }
     ))
 }
@@ -82,9 +83,15 @@ exports.postSignUp = (req,res) => {
                 path: "/signup",
                 pageTitle: "ثبت نام",
                 errorMsg: errors.array()[0].msg,
+                oldInput : {
+                    name : username,
+                    email: email,
+                    passWord: passWord,
+                    confirmPassWord: confirmPassWord
+                }
             }
         )
-       )
+       );
     }
 
     // در صورتی که یوزری با این ایمل قبلا وجود نداشته باشه، یوزر جدید ساخته میشه
