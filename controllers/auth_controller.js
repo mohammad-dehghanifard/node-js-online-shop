@@ -13,7 +13,8 @@ exports.renderLoginPage = (req,res) => {
     res.render("auth/login",{
         path: "/login",
         pageTitle : "ورود به حساب کاربری",
-        message : errorMessage
+        message : errorMessage,
+        oldInput : []
     })
     
 }
@@ -22,6 +23,20 @@ exports.renderLoginPage = (req,res) => {
 exports.postLogin = async (req, res) => {
     const email = req.body.email;
     const pass = req.body.passWord;
+    const errors = validationResult(req);
+
+    if(!errors.isEmpty()){
+        console.log(errors['errors']);
+        return res.status(422).render("auth/login",{
+            path: "/login",
+            pageTitle : "ورود به حساب کاربری",
+            message : errors.array()[0].msg,
+            oldInput : {
+                email: email,
+                passWord : pass,
+            }
+        })
+    }
 
     try {
         const user = await User.findOne({ email: email });
@@ -64,7 +79,8 @@ exports.getSignPage = (req,res) => {
             path: "/signup",
             pageTitle: "ثبت نام",
             errorMsg: null,
-            oldInput: null
+            oldInput: null,
+            validateErrors: []
         }
     ))
 }
@@ -77,6 +93,7 @@ exports.postSignUp = (req,res) => {
     const errors = validationResult(req);
 
     if(!errors.isEmpty()){
+        console.log(errors['errors'][0]);
        return res.status(422).render(
         "auth/signup",(
             {
@@ -88,7 +105,8 @@ exports.postSignUp = (req,res) => {
                     email: email,
                     passWord: passWord,
                     confirmPassWord: confirmPassWord
-                }
+                },
+                validateErrors : errors.array(),
             }
         )
        );

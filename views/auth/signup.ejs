@@ -20,7 +20,8 @@
 
               <form action="/signup" method="post" novalidate>
                 <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-                <div class="form-outline mb-4">
+
+                <div class="form-outline mb-4" <%= validateErrors.find(object => object.path === 'name')? 'alert-danger' : '' %>>
                   <input name="name" type="text" id="typeEmailX-2" class="form-control form-control-lg" placeholder="نام کاربری خود را وارد کنید"
                   value="<% if(oldInput !== null){ %><%= oldInput.name %><% } %>">
                 </div>

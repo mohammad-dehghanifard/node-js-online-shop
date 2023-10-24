@@ -4,13 +4,21 @@ const authController = require("../controllers/auth_controller");
 const {body} = require('express-validator');
 
 router.get("/login",authController.renderLoginPage);
-router.post("/login",authController.postLogin)
+// post user information and login user
+router.post(
+    "/login",
+    [
+        body('email',"لطفا یک ایمیل معتبر وارد کنید!").isEmail().normalizeEmail().trim(),
+        body('passWord',"پسورد وارد شده معتبر نمیباشد!").isLength({min:5}).trim(),
+    ],
+authController.postLogin)
 router.post("/logOut",authController.postLogOut);
 router.get("/signup",authController.getSignPage);
 // post user information and signup user
 router.post(
     "/signup",
     [
+      body("name","نام کاربری باید حداقل شامل 3 کاراکتر باشد!").isLength({min:3}),
       body("email","ایمیل وارد شده معتبر نمیباشد! لطفا یک ایمیل معتبر وارد کنید").isEmail(),
       body("passWord","رمزعبور باید شامل حروف و اعداد انگلیسی و حداقل 5 کاراکتر باشد").isLength({min:5}).isAlphanumeric(),
       body("confirmPassWord").custom(
