@@ -7,7 +7,7 @@ router.get("/login",authController.renderLoginPage);
 router.post("/login",authController.postLogin)
 router.post("/logOut",authController.postLogOut);
 router.get("/signup",authController.getSignPage);
-router.post("/signup",check("email").isEmail(),authController.postSignUp);
+router.post("/signup",check("email").isEmail().withMessage("ایمیل وارد شده معتبر نمیباشد! لطفا یک ایمیل معتبر وارد کنید"),authController.postSignUp);
 router.get("/resetPass",authController.renderResetPassView);
 router.post("/resetPass",authController.sendTokenForResetPassWord);
 router.get("/resetPass/:token",authController.renderSetNewPassWordView);

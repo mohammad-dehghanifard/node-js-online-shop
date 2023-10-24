@@ -63,7 +63,7 @@ exports.getSignPage = (req,res) => {
         {
             path: "/signup",
             pageTitle: "ثبت نام",
-            isAuthenticated : false
+            errorMsg: null
         }
     ))
 }
@@ -76,14 +76,12 @@ exports.postSignUp = (req,res) => {
     const errors = validationResult(req);
 
     if(!errors.isEmpty()){
-        console.error(errors.array());
-
        return res.status(422).render(
         "auth/signup",(
             {
                 path: "/signup",
                 pageTitle: "ثبت نام",
-                //isAuthenticated : false
+                errorMsg: errors.array()[0].msg, // 0 => email validate result object
             }
         )
        )

@@ -8,6 +8,14 @@
         <div class="col-12 col-md-8 col-lg-6 col-xl-5">
           <div class="card shadow-2-strong" style="border-radius: 1rem">
             <div class="card-body p-5 text-center">
+
+              <!-- نمایش خطا در صورت وارد کردن ایمیل نامعتبر -->
+              <% if(errorMsg != null){ %>
+                <div class="alert alert-danger" role="alert">
+                  <%= errorMsg %>
+                </div>
+                <% } %>
+
               <h3 class="mb-5">ثبت نام</h3>
 
               <form action="/signup" method="post" novalidate>
@@ -17,7 +25,7 @@
                 </div>
 
                 <div class="form-outline mb-4">
-                  <input name="email" type="email" id="typeEmailX-2" class="form-control form-control-lg" placeholder="نام کاربری یا ایمیل خود را وارد کنید">
+                  <input name="email" type="email" id="typeEmailX-2" class="form-control form-control-lg" placeholder="ایمیل خود را وارد کنید">
                 </div>
   
                 <div class="form-outline mb-4">
