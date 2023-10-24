@@ -9,7 +9,7 @@ router.post(
     "/login",
     [
         body('email',"لطفا یک ایمیل معتبر وارد کنید!").isEmail().normalizeEmail().trim(),
-        body('passWord',"پسورد وارد شده معتبر نمیباشد!").isLength({min:5}).trim(),
+        body('passWord',"پسورد وارد شده معتبر نمیباشد!").isLength({min:3}).trim(),
     ],
 authController.postLogin)
 router.post("/logOut",authController.postLogOut);

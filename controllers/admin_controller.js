@@ -1,5 +1,6 @@
 const Product = require("../models/product")
 const cookieParser = require("../utils/cookie_parser")
+const {validationResult} = require("express-validator");
 
 
 function getAddProducte(req,res){
@@ -8,6 +9,8 @@ function getAddProducte(req,res){
         path : "admin/add-product",
         pageTitle : "افزودن محصول جدید",
         editing : false,
+        errorMessage: null,
+        oldUserInput: {}
     })
 }
 
@@ -17,6 +20,24 @@ function addPostProduct(req,res){
     const content = req.body.content;
     const price = req.body.price;
     const imageUrl = req.body.imageurl;
+    const errors = validationResult(req);
+
+    if(!errors.isEmpty()){
+        console.log(errors.array());
+
+        return res.status(422).render("admin/add-product",{
+            path : "admin/add-product",
+            pageTitle : "افزودن محصول جدید",
+            editing : false,
+            errorMessage : errors.array()[0].msg,
+            oldUserInput: {
+                title: title,
+                content: content,
+                price: price,
+                imageUrl: imageUrl
+            }
+        })
+    }
 
     const product = new Product({
         title : title,
@@ -72,6 +93,8 @@ function getEditProduct(req,res){
                 pageTitle : "ویرایش مخصول جدید",
                 editing : editMode,
                 product : product,
+                errorMessage: null,
+                oldUserInput: {}
             }
             )
     }
