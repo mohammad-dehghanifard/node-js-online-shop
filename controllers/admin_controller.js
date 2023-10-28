@@ -53,14 +53,14 @@ function addPostProduct(req,res,next){
         res.redirect('/')
     }).catch(err =>{
          const error = new Error(err);
-         err.httpStatusCode = 500;
+         error.httpStatusCode = 500;
          return next(error);
     })
 
 }
 
 //دریافت تمام محصولات فروشنده
-function getAllProducts(req,res){
+function getAllProducts(req,res,next){
     const isLogged = cookieParser(req);
     Product.find({userId: req.user._id}).
     then(products => {
@@ -70,11 +70,15 @@ function getAllProducts(req,res){
             productList : products,
         })
     }).catch(
-        error => {console.log(error)}
+        err => {
+         const error = new Error(err);
+         err.httpStatusCode = 500;
+         return next(error);
+        }
     )
 }
 
-function getEditProduct(req,res){
+function getEditProduct(req,res,next){
  const editMode = req.query.edit;
  const isLogged = cookieParser(req);
 
@@ -103,11 +107,15 @@ function getEditProduct(req,res){
             }
             )
     }
- )
+ ).catch(err =>{
+    const error = new Error(err);
+    error.httpStatusCode = 500;
+    return next(error);
+ });
  
 }
 
-function postEditProduct(req,res) {
+function postEditProduct(req,res,next) {
     const productId = req.body.productID;
 
     // در صورتی که کاربر دیگه ای به جز صاحب محصول باشه ویرایش انجام نمیشه و به صفحه اصلی منتقل میشه
@@ -128,11 +136,14 @@ function postEditProduct(req,res) {
         return product.save().then(result => {
             res.redirect("/");
         });
-    }).catch(err => {console.error(err)});
+    }).catch(err => { 
+        const error = new Error(err);
+        error.httpStatusCode = 500;
+        return next(error);});
     
 }
 
-function deleteProduct(req,res){
+function deleteProduct(req,res,next){
     const productID = req.body.productId;
 
     Product.findOneAndDelete({
@@ -147,8 +158,11 @@ function deleteProduct(req,res){
             res.redirect("/")
         }
     })
-    .catch(error => {
-        console.error(error.message)})
+    .catch(err => {
+        const error = new Error(err);
+        error.httpStatusCode = 500;
+        return next(error);
+    })
 }
 
 module.exports = {
