@@ -4,7 +4,6 @@ const cookieParser = require("../utils/cookie_parser");
 
 // نمایش محصولات داخل صفحه اصلی
 exports.getAllProduct = (req,res) => {
-    const isLogged = cookieParser(req);
     const data = Product.find().then(products => {
         res.render("shop/index",{
             path : "/",
