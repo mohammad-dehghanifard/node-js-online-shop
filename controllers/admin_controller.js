@@ -15,7 +15,7 @@ function getAddProducte(req,res){
     })
 }
 
-function addPostProduct(req,res){
+function addPostProduct(req,res,next){
 
     const title = req.body.title;
     const content = req.body.content;
@@ -52,7 +52,9 @@ function addPostProduct(req,res){
         console.log("product added....");
         res.redirect('/')
     }).catch(err =>{
-         return res.redirect("/500")
+         const error = new Error(err);
+         err.httpStatusCode = 500;
+         return next(error);
     })
 
 }

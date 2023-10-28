@@ -72,6 +72,9 @@ app.use(shopRouter);
 app.use(authRouter);
 app.get("/500",errorController.get500);
 
+app.use((error,req,res,next) => {
+    res.redirect("/500")
+})
 
 
 mongoose.connect(mongoUri)
