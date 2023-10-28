@@ -10,6 +10,7 @@ const session = require('express-session');
 const MongoDBStore = require('connect-mongodb-session')(session);
 const csrf = require('csurf');
 const flash = require('connect-flash');
+const errorController = require("./controllers/error_controller");
 
 
 const port = 3030;
@@ -55,6 +56,9 @@ app.use((req, res, next) => {
         return next();
     }
     User.findById(req.session.user._id).then(user => {
+        if(!user){
+            return next();
+        }
         req.user = user;
         next();
     }).catch(err => {
@@ -66,6 +70,7 @@ app.use((req, res, next) => {
 app.use("/admin",adminRouter);
 app.use(shopRouter);
 app.use(authRouter);
+app.get("/500",errorController.get500);
 
 
 
