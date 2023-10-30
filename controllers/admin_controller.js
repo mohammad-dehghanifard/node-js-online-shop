@@ -19,10 +19,10 @@ function addPostProduct(req,res,next){
     const title = req.body.title;
     const content = req.body.content;
     const price = req.body.price;
-    const imageUrl = req.file // => (multer)دریافت فایل انتخاب شده توسط کاربر با کمک پکیج ;
+    const image = req.file // => (multer)دریافت فایل انتخاب شده توسط کاربر با کمک پکیج ;
     const errors = validationResult(req);
 
-    console.log('File : ',imageUrl);
+    console.log('File : ',image);
     // در صورتی که اعتبار سنجی به مشکل بخوره
     if(!errors.isEmpty()){
         return res.status(422).render("admin/add-product",{
@@ -34,7 +34,22 @@ function addPostProduct(req,res,next){
                 title: title,
                 content: content,
                 price: price,
-                imageUrl: imageUrl
+                imageUrl: image.path,
+            }
+        });
+    }
+
+    // در صورتی که کاربر به جای عکس فایل دیگه ای انتخاب کنه
+    if(!image){
+        return res.status(422).render("admin/add-product",{
+            path : "admin/add-product",
+            pageTitle : "افزودن محصول جدید",
+            editing : false,
+            errorMessage : "لطفا برای تصویر محصول خود یک تصویر معتبر انتخاب کنید",
+            oldUserInput: {
+                title: title,
+                content: content,
+                price: price,
             }
         })
     }
@@ -43,7 +58,7 @@ function addPostProduct(req,res,next){
         title : title,
         content : content,
         price : price,
-        imageurl : imageUrl,
+        imageurl : image.path,
         userId : req.user
     })
 
@@ -123,13 +138,16 @@ function postEditProduct(req,res,next) {
 
     const updatedTitle = req.body.title;
     const updatedPrice = req.body.price;
-    const updatedImageUrl = req.body.productImg;
+    const updatedImage = req.file;
     const updatedContent = req.body.content;
 
     Product.findById(productId).then(product => {
         product.title = updatedTitle;
         product.price = updatedPrice;
-        product.imageurl = updatedImageUrl;
+        // در صورتی که کاربر عکس جدیدی انتخاب کرده باشه عکس عوض میشه
+        if(updatedImage){
+            product.imageurl = updatedImage;
+        }
         product.content = updatedContent;
         return product.save().then(result => {
             res.redirect("/");
