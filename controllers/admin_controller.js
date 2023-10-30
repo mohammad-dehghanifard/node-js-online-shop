@@ -19,9 +19,10 @@ function addPostProduct(req,res,next){
     const title = req.body.title;
     const content = req.body.content;
     const price = req.body.price;
-    const imageUrl = req.body.productImg;
+    const imageUrl = req.file // => (multer)دریافت فایل انتخاب شده توسط کاربر با کمک پکیج ;
     const errors = validationResult(req);
 
+    console.log('File : ',imageUrl);
     // در صورتی که اعتبار سنجی به مشکل بخوره
     if(!errors.isEmpty()){
         return res.status(422).render("admin/add-product",{
@@ -47,7 +48,6 @@ function addPostProduct(req,res,next){
     })
 
     product.save().then(result => {
-        console.log("product added....");
         res.redirect('/')
     }).catch(err =>{
          const error = new Error(err);
