@@ -7,7 +7,7 @@
   <ul class="orders">
     <% orders.forEach(order => { %>
     <li class="orders_item">
-      <h1>شناسه سفارش - <%= order._id %></h1>
+      <h1>شناسه سفارش - <%= order._id %> - <a href="/invoices/<%= order._id %>">دریافت  گزارش</a> </h1>
       <ul class="orders_products">
         <% order.products.forEach(p =>{ %>
         <li class="orders_products_item">

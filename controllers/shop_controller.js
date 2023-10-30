@@ -1,6 +1,8 @@
 const Product = require("../models/product");
 const Order = require("../models/order");
 const cookieParser = require("../utils/cookie_parser");
+const path = require('path');
+const fs = require('fs');
 
 // نمایش محصولات داخل صفحه اصلی
 exports.getAllProduct = (req,res) => {
@@ -114,4 +116,21 @@ exports.getAllOrders = (req,res) => {
             )
     }
  )
+}
+
+//دریافت گزارش سفارشات توسط کاربر
+exports.getInvoice = (req,res,next) => {
+    const orderId = req.params.orderId;
+    const invoiceName = 'invoice-' + orderId + '.pdf';
+    const invoicePath = path.join("files",'invoices',invoiceName);
+
+    fs.readFile(invoicePath,(err,data)=>{
+        if(err){
+            return next(err);
+        }
+
+        res.send(data)
+        
+    });
+
 }

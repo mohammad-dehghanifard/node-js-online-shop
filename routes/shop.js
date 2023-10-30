@@ -1,6 +1,7 @@
 const express = require("express");
 const shopController = require('../controllers/shop_controller');
 const router = express.Router();
+const isAuth = require('../middleware/is-auth')
 
 router.get("/",shopController.getAllProduct)
 
@@ -17,5 +18,7 @@ router.get("/cart",shopController.getallCartProducts);
 router.post("/add-order",shopController.postOrder);
 
 router.get("/orders",shopController.getAllOrders);
+
+router.get("/invoices/:orderId",isAuth,shopController.getInvoice);
 
 module.exports = router
