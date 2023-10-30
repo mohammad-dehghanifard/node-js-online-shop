@@ -53,7 +53,8 @@ var store = new MongoDBStore(
 );
 
 // static مشخص کردن مسیر فایل های 
-app.use(express.static(path.join(__dirname,"public")))
+app.use(express.static(path.join(__dirname,"public")));
+app.use("/assets",express.static(path.join(__dirname,"assets")))
 // داده های ارسالی ریسپانس ها رو به جیسون تبدیل میکنه
 app.use(bodyParser.urlencoded({extended: false}));
 //ارسال عکس محصول به سرور
