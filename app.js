@@ -11,6 +11,7 @@ const MongoDBStore = require('connect-mongodb-session')(session);
 const csrf = require('csurf');
 const flash = require('connect-flash');
 const errorController = require("./controllers/error_controller");
+const multer = require("multer");
 
 
 const port = 3030;

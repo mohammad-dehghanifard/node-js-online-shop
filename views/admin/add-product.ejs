@@ -38,10 +38,10 @@
         <div class="form-group">
           <label for="title">آدرس عکس</label>
           <input
-            type="text"
+            type="file"
             class="form-control"
-            id="imageUrl"
-            name="imageurl"
+            id="productImg"
+            name="productImg"
             placeholder="عکس محصول را وارد کنید"
             value="<% if(editing){ %> <%= product.imageurl%><% }else if(oldUserInput !== null){%><%= oldUserInput.imageUrl%><%}%>"
           />

@@ -1,7 +1,6 @@
 const Product = require("../models/product")
 const cookieParser = require("../utils/cookie_parser")
 const {validationResult} = require("express-validator");
-const mongoose = require("mongoose");
 
 
 function getAddProducte(req,res){
@@ -20,7 +19,7 @@ function addPostProduct(req,res,next){
     const title = req.body.title;
     const content = req.body.content;
     const price = req.body.price;
-    const imageUrl = req.body.imageurl;
+    const imageUrl = req.body.productImg;
     const errors = validationResult(req);
 
     // در صورتی که اعتبار سنجی به مشکل بخوره
@@ -40,7 +39,6 @@ function addPostProduct(req,res,next){
     }
 
     const product = new Product({
-        _id : new mongoose.Types.ObjectId("64d8ce12a09720aadb4e392e"),
         title : title,
         content : content,
         price : price,
@@ -125,7 +123,7 @@ function postEditProduct(req,res,next) {
 
     const updatedTitle = req.body.title;
     const updatedPrice = req.body.price;
-    const updatedImageUrl = req.body.imageurl;
+    const updatedImageUrl = req.body.productImg;
     const updatedContent = req.body.content;
 
     Product.findById(productId).then(product => {
