@@ -19,6 +19,7 @@ const app = express();
 const mongoUri = "mongodb://0.0.0.0:27017/shop";
 var csrfProtection = csrf();
 
+// مشخص کردن محل ذخیره تصاویر
 const fileStorageOption = multer.diskStorage({
     // cb => callBack Function
     destination : (req,file,cb) =>{
@@ -27,7 +28,20 @@ const fileStorageOption = multer.diskStorage({
     filename: (req,file,cb) => {
         cb(null,Date.now().toString() + "-" + file.originalname);
     }
-})
+});
+
+// فیلتر کردن فایل های بر اساس نوع
+function fileFilterConfig(req,file,cb) {
+    if(
+        file.mimetype === 'image/png' || 
+        file.mimetype === 'image/jpg' ||
+        file.mimetype === 'image/jpeg'
+        ){
+            cb(null,true);
+    }else{
+        cb(null,false);
+    }
+}
 
 app.set("views,views");
 app.set("view engine","ejs")
@@ -43,7 +57,10 @@ app.use(express.static(path.join(__dirname,"public")))
 // داده های ارسالی ریسپانس ها رو به جیسون تبدیل میکنه
 app.use(bodyParser.urlencoded({extended: false}));
 //ارسال عکس محصول به سرور
-app.use(multer({storage : fileStorageOption}).single("productImg"));
+app.use(multer({
+    storage : fileStorageOption,
+    fileFilter : fileFilterConfig
+}).single("productImg"));
 // برای پاس دادن داده موقع ری دایرکت کردن کاربر
 app.use(flash());
 //session config
