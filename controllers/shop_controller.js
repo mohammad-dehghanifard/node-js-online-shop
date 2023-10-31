@@ -131,17 +131,13 @@ exports.getInvoice = (req,res,next) => {
         if(order.user.userId.toString() !== req.user._id.toString()){
             return next(new Error("This report is not related to your orders!"));
         }
-        fs.readFile(invoicePath,(err,data)=>{
-            if(err){
-                return next(err);
-            }
-    
-            //ارسال اطلاعات فایل داخل هدر
+        // دانلود فایل توسط کاربر
+        else{
+            const file = fs.createReadStream(invoicePath);
             res.setHeader('Content-Type', 'application/pdf');
             res.setHeader('Content-Disposition','inline; filename="'+invoiceName+'"');
-            res.send(data);
-            
-        });
+            file.pipe(res);
+        }
     }
     ).catch(err => next(err));
 
