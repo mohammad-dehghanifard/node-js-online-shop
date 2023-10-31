@@ -129,7 +129,10 @@ exports.getInvoice = (req,res,next) => {
             return next(err);
         }
 
-        res.send(data)
+        //ارسال اطلاعات فایل داخل هدر
+        res.setHeader('Content-Type', 'application/pdf');
+        res.setHeader('Content-Disposition','inline; filename="'+invoiceName+'"');
+        res.send(data);
         
     });
 
