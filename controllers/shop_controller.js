@@ -124,16 +124,27 @@ exports.getInvoice = (req,res,next) => {
     const invoiceName = 'invoice-' + orderId + '.pdf';
     const invoicePath = path.join("files",'invoices',invoiceName);
 
-    fs.readFile(invoicePath,(err,data)=>{
-        if(err){
-            return next(err);
+    Order.findById(orderId).then( order =>{
+        if(!order){
+            return next(new Error("Order Not Found..."));
         }
+        if(order.user.userId.toString() !== req.user._id.toString()){
+            return next(new Error("This report is not related to your orders!"));
+        }
+        fs.readFile(invoicePath,(err,data)=>{
+            if(err){
+                return next(err);
+            }
+    
+            //ارسال اطلاعات فایل داخل هدر
+            res.setHeader('Content-Type', 'application/pdf');
+            res.setHeader('Content-Disposition','inline; filename="'+invoiceName+'"');
+            res.send(data);
+            
+        });
+    }
+    ).catch(err => next(err));
 
-        //ارسال اطلاعات فایل داخل هدر
-        res.setHeader('Content-Type', 'application/pdf');
-        res.setHeader('Content-Disposition','inline; filename="'+invoiceName+'"');
-        res.send(data);
-        
-    });
+    
 
 }
