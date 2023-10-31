@@ -1,6 +1,7 @@
 const Product = require("../models/product")
 const cookieParser = require("../utils/cookie_parser")
 const {validationResult} = require("express-validator");
+const fileHelper = require('../utils/file_clear');
 
 
 function getAddProducte(req,res){
@@ -22,7 +23,6 @@ function addPostProduct(req,res,next){
     const image = req.file // => (multer)دریافت فایل انتخاب شده توسط کاربر با کمک پکیج ;
     const errors = validationResult(req);
 
-    console.log('File : ',image);
     // در صورتی که اعتبار سنجی به مشکل بخوره
     if(!errors.isEmpty()){
         return res.status(422).render("admin/add-product",{
@@ -146,6 +146,7 @@ function postEditProduct(req,res,next) {
         product.price = updatedPrice;
         // در صورتی که کاربر عکس جدیدی انتخاب کرده باشه عکس عوض میشه
         if(updatedImage){
+            fileHelper.fileClear(product.imageurl);
             product.imageurl = updatedImage;
         }
         product.content = updatedContent;
@@ -162,13 +163,19 @@ function postEditProduct(req,res,next) {
 function deleteProduct(req,res,next){
     const productID = req.body.productId;
 
-    Product.findOneAndDelete({
-        _id : productID,
-        userId : req.user._id // برای جلوگیری از حذف محصول توسط فروشنده های دیگه
-    })
-    .then(product =>{
+    Product.findById(productID).then(
+        (product) => {
+            if(!product){
+                return next(new Error("Product Not Found...."))
+            }
+            fileHelper.fileClear(product.imageurl);
+            return Product.findOneAndDelete({
+                _id : productID,
+                userId : req.user._id // برای جلوگیری از حذف محصول توسط فروشنده های دیگه
+            })
+        }
+    ).then(product =>{
         if(product){
-         console.log("Product Deleted....");
          res.redirect("/admin/products")
         }else{
             res.redirect("/")
