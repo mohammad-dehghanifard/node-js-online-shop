@@ -3,6 +3,7 @@ const Order = require("../models/order");
 const cookieParser = require("../utils/cookie_parser");
 const path = require('path');
 const fs = require('fs');
+const pdfkit = require('pdfkit');
 
 // نمایش محصولات داخل صفحه اصلی
 exports.getAllProduct = (req,res) => {
@@ -131,12 +132,15 @@ exports.getInvoice = (req,res,next) => {
         if(order.user.userId.toString() !== req.user._id.toString()){
             return next(new Error("This report is not related to your orders!"));
         }
-        // دانلود فایل توسط کاربر
+        // ایجاد فایل پی دی اف و دانلود توسط کاربر
         else{
-            const file = fs.createReadStream(invoicePath);
+            const pdfDoc = new pdfkit();
             res.setHeader('Content-Type', 'application/pdf');
             res.setHeader('Content-Disposition','inline; filename="'+invoiceName+'"');
-            file.pipe(res);
+            pdfDoc.pipe(fs.createWriteStream(invoicePath));
+            pdfDoc.pipe(res);
+            pdfDoc.text("hello");
+            pdfDoc.end();
         }
     }
     ).catch(err => next(err));
