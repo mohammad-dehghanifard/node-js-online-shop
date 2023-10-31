@@ -139,7 +139,16 @@ exports.getInvoice = (req,res,next) => {
             res.setHeader('Content-Disposition','inline; filename="'+invoiceName+'"');
             pdfDoc.pipe(fs.createWriteStream(invoicePath));
             pdfDoc.pipe(res);
-            pdfDoc.text("hello");
+            //پر کردن اطلاعات پی دی اف
+            pdfDoc.fontSize(24).text("Invoice");
+            pdfDoc.fontSize(12).text("................................................");
+            let totalPrice = 0;
+            order.products.forEach(it => {
+                totalPrice += it.quantity * it.product.price;
+                pdfDoc.text(it.product.title + it.quantity);
+                pdfDoc.text("Price : " + it.product.price.toString());
+            });
+            pdfDoc.text("Total Price: " + totalPrice.toString())
             pdfDoc.end();
         }
     }
