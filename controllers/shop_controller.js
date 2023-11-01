@@ -5,9 +5,15 @@ const path = require('path');
 const fs = require('fs');
 const pdfkit = require('pdfkit');
 
+const pageSize = 1;
+
 // نمایش محصولات داخل صفحه اصلی
 exports.getAllProduct = (req,res) => {
-    const data = Product.find().then(products => {
+    const page = req.query.page;
+    const data = Product.find()
+    .skip((page - 1) * pageSize)
+    .limit(pageSize)
+    .then(products => {
         res.render("shop/index",{
             path : "/",
             pageTitle : "صفحه اصلی",
