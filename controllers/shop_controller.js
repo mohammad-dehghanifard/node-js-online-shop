@@ -8,7 +8,7 @@ const pdfkit = require('pdfkit')
 const pageSize = 1;
 // نمایش محصولات داخل صفحه اصلی
 exports.getAllProduct = (req, res) => {
-  const page = req.query.page
+  const page = req.query.page === undefined? 1 : parseInt(req.query.page) //=> در صورتی که از ریکوئست مقداری رو نگیره 1 رو داخل خودش میریزه
   let totalProduct;
   // صفحه بندی
    Product.find()
@@ -27,8 +27,9 @@ exports.getAllProduct = (req, res) => {
         productCount : totalProduct,
         hasnextPage : pageSize * page < totalProduct,
         hasPreviousPage: page > 1,
-        nextPage : page + 1,
-        previousPage: page - 1,
+        nextPage : page+1,
+        previousPage: page-1,
+        currentPage: page,
         lastPage: Math.ceil( totalProduct / pageSize), // ceil => خروجی رو رند میکنه تا اگر اعشار برگردوند برنامه به خطا نخوره
       })
     })
