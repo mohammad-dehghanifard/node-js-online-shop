@@ -165,3 +165,19 @@ exports.getInvoice = (req, res, next) => {
     })
     .catch(err => next(err))
 }
+
+exports.getChackOut = async (req,res) => {
+  const user = await req.user.populate('cart.items.productId')
+  const allproducts = user.cart.items;
+  let totalPrice = 0;
+  allproducts.forEach(product => {
+    totalPrice += product.quantity * product.productId.price;
+  })
+
+  res.render('shop/checkout', {
+    path: '/checkout',
+    pageTitle: 'پرداخت نهایی',
+    productList: user.cart.items,
+    totalSum: totalPrice,
+  })
+}
