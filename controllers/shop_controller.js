@@ -195,7 +195,7 @@ exports.getPayment = async (req,res,next)=> {
 
   zarinpal.PaymentRequest({
     Amount : totalPrice,
-    CallbackURL : "http://localhost:3030/",
+    CallbackURL : "http://localhost:3030/CheckPayment",
     Email : user.email,
     Description : "تست درگاه پرداخت"
   }).then(result => {
@@ -203,4 +203,29 @@ exports.getPayment = async (req,res,next)=> {
   }).catch(err => {
     next(err);
   })
+}
+
+exports.CheckPayment = async (req,res,next) =>{
+  const status = req.query.Status;
+  const authority = req.query.Authority;
+
+  const user = await req.user.populate('cart.items.productId')
+  const allproducts = user.cart.items;
+  let totalPrice = 0;
+  allproducts.forEach(product => {
+    totalPrice += product.quantity * product.productId.price;
+  });
+
+  if(status === "OK"){
+    zarinpal.PaymentVerification({
+      Amount: totalPrice, // In Tomans
+      Authority: authority,
+    }).then( result =>{
+      this.postOrder(req,res)
+    }
+    )
+  }else if(status === "NOK"){
+    res.redirect("/cart")
+  }
+
 }

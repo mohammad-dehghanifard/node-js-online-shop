@@ -25,4 +25,6 @@ router.get("/checkOut",shopController.getChackOut);
 
 router.get("/paymentRequest",shopController.getPayment);
 
+router.get("/CheckPayment",shopController.CheckPayment);
+
 module.exports = router
