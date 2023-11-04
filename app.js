@@ -12,11 +12,15 @@ const csrf = require('csurf');
 const flash = require('connect-flash');
 const errorController = require("./controllers/error_controller");
 const multer = require("multer");
+require('dotenv').config()
+
+let port = process.env.port;
+let host = process.env.host;
+let databaseName = process.env.databaseName;
 
 
-const port = 3030;
 const app = express();
-const mongoUri = "mongodb://0.0.0.0:27017/shop";
+const mongoUri = `mongodb://${host}/${databaseName}`;
 var csrfProtection = csrf();
 
 // مشخص کردن محل ذخیره تصاویر
