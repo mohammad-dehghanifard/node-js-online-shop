@@ -74,7 +74,6 @@ function addPostProduct(req,res,next){
 
 //دریافت تمام محصولات فروشنده
 function getAllProducts(req,res,next){
-    const isLogged = cookieParser(req);
     Product.find({userId: req.user._id}).
     then(products => {
         res.render("admin/products",{

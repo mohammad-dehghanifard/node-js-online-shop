@@ -5,7 +5,7 @@ const path = require('path')
 const fs = require('fs')
 const pdfkit = require('pdfkit')
 
-const pageSize = 1;
+const pageSize = 2;
 // نمایش محصولات داخل صفحه اصلی
 exports.getAllProduct = (req, res) => {
   const page = req.query.page === undefined? 1 : parseInt(req.query.page) //=> در صورتی که از ریکوئست مقداری رو نگیره 1 رو داخل خودش میریزه
