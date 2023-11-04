@@ -23,4 +23,6 @@ router.get("/invoices/:orderId",isAuth,shopController.getInvoice);
 
 router.get("/checkOut",shopController.getChackOut);
 
+router.get("/paymentRequest",shopController.getPayment);
+
 module.exports = router

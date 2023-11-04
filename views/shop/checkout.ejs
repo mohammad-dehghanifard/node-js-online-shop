@@ -30,7 +30,7 @@
   <div class="row">
     <div class="container">
       <div class="centered">
-        <form action="/paymentRequest" method="post">
+        <form action="/paymentRequest" method="get">
           <input type="hidden" name="_csrf" value="<%= csrfToken %>">
           <button type="submit" class="btn btn-success">پرداخت</button>
         </form>

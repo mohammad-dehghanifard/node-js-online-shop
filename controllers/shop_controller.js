@@ -1,11 +1,14 @@
-const Product = require('../models/product')
-const Order = require('../models/order')
-const cookieParser = require('../utils/cookie_parser')
-const path = require('path')
-const fs = require('fs')
-const pdfkit = require('pdfkit')
+const Product = require('../models/product');
+const Order = require('../models/order');
+const cookieParser = require('../utils/cookie_parser');
+const path = require('path');
+const fs = require('fs');
+const pdfkit = require('pdfkit');
+const zarinPalCheckOut = require("zarinpal-checkout");
+const { isErrored } = require('stream');
 
 const pageSize = 2;
+const zarinpal = zarinPalCheckOut.create('xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx',true)
 // نمایش محصولات داخل صفحه اصلی
 exports.getAllProduct = (req, res) => {
   const page = req.query.page === undefined? 1 : parseInt(req.query.page) //=> در صورتی که از ریکوئست مقداری رو نگیره 1 رو داخل خودش میریزه
@@ -179,5 +182,25 @@ exports.getChackOut = async (req,res) => {
     pageTitle: 'پرداخت نهایی',
     productList: user.cart.items,
     totalSum: totalPrice,
+  })
+}
+
+exports.getPayment = async (req,res,next)=> {
+  const user = await req.user.populate('cart.items.productId')
+  const allproducts = user.cart.items;
+  let totalPrice = 0;
+  allproducts.forEach(product => {
+    totalPrice += product.quantity * product.productId.price;
+  });
+
+  zarinpal.PaymentRequest({
+    Amount : totalPrice,
+    CallbackURL : "http://localhost:3030/",
+    Email : user.email,
+    Description : "تست درگاه پرداخت"
+  }).then(result => {
+   return res.redirect(result.url);
+  }).catch(err => {
+    next(err);
   })
 }
