@@ -4,6 +4,17 @@
 
 <main>
     <main>
+
+      <% if(refId){ %>
+        <div class="alert alert-success" role="alert">
+          <h2>پرداخت شما با موفقیت انجام شد</h2>
+          <hr>
+          <h3> شماره پیگیری سفارش : <%= refId %></h3>
+        </div>
+        <% } %>
+
+
+
   <ul class="orders">
     <% orders.forEach(order => { %>
     <li class="orders_item">

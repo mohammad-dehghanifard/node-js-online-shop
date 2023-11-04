@@ -6,6 +6,7 @@ const fs = require('fs');
 const pdfkit = require('pdfkit');
 const zarinPalCheckOut = require("zarinpal-checkout");
 const { isErrored } = require('stream');
+const flash = require("connect-flash");
 
 const pageSize = 2;
 const zarinpal = zarinPalCheckOut.create('xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx',true)
@@ -122,7 +123,8 @@ exports.getAllOrders = (req, res) => {
     res.render('shop/orders', {
       path: '/allorders',
       pageTitle: 'سفارشات شما',
-      orders: orders
+      orders: orders,
+      refId: req.flash("refId")[0]
     })
   })
 }
@@ -221,6 +223,7 @@ exports.CheckPayment = async (req,res,next) =>{
       Amount: totalPrice, // In Tomans
       Authority: authority,
     }).then( result =>{
+      req.flash("refId",result.RefID);
       this.postOrder(req,res)
     }
     )
