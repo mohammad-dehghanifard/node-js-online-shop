@@ -160,7 +160,7 @@ function postEditProduct(req,res,next) {
 }
 
 function deleteProduct(req,res,next){
-    const productID = req.body.productId;
+    const productID = req.params.productId;
 
     Product.findById(productID).then(
         (product) => {
@@ -175,9 +175,13 @@ function deleteProduct(req,res,next){
         }
     ).then(product =>{
         if(product){
-         res.redirect("/admin/products")
+         res.json({
+            message: "product deleted...."
+         });
         }else{
-            res.redirect("/")
+            res.json({
+                message: "product deleted faield...."
+             });
         }
     })
     .catch(err => {
